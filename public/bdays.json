@@ -1,0 +1,20 @@
+[
+  { 
+    "id": 0,
+    "name": "Ty McFarland", 
+    "date": "04/26/1994", 
+    "stokeLevel": 0
+  },
+  { 
+    "id": 1,
+    "name": "Olya McFarland", 
+    "date": "05/04/1995", 
+    "stokeLevel": 4
+  },
+  { 
+    "id": 2,
+    "name": "Kathaleen McFarland", 
+    "date": "10/31/1960", 
+    "stokeLevel": 2
+  }
+]
