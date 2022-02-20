@@ -127,6 +127,11 @@ h1 {
   align-items: center;
   margin-top: 30px;
 }
+/* 
+.bday-form {
+  display: flex;
+  justify-content: center;
+} */
 
 .form-control {
   margin: 20px 0;

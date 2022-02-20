@@ -1,5 +1,6 @@
-import { Outlet, LiveReload, Link, Links, Meta } from "remix";
+import { Outlet, LiveReload, Link, Links, Meta, Scripts } from "remix";
 import globalStylesUrl from "~/styles/global.css";
+import { db } from "~/utils/db.server";
 
 export const links = () => [{ rel: "stylesheet", href: globalStylesUrl }];
 
@@ -31,11 +32,13 @@ const Document = ({ children, title }) => {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <Scripts />
         <title>{title ? title : "Birthday Saver"}</title>
       </head>
       <body>
         {children}
         {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
+        <Scripts />
       </body>
     </html>
   );
