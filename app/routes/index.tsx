@@ -1,8 +1,10 @@
-import { useLoaderData } from "remix";
+import { useLoaderData, useActionData, Link  } from "remix";
 import type { LoaderFunction } from "remix";
-import { useState } from "react";
 import { db } from "~/utils/db.server";
-import NewBday from "../components/NewBday";
+
+export const links = () => {
+
+}
 
 export let loader: LoaderFunction = async () => {
   const data = {
@@ -23,47 +25,22 @@ type Birthday = {
   stokeLevel: number;
 };
 
-const handleDelete = async (id: number) => {
-  console.log({ db });
-
-  const deleteBday = await db.birthday.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  console.log({ deleteBday });
-
-  if (!deleteBday) {
-    throw new Error("There was a problem deleting this birthday");
-  }
-
-  alert("birthday deleted!");
-};
-
 export default function Home() {
   const { bdays } = useLoaderData();
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  function handleOpenModal() {
-    setIsOpen(!isOpen ? true : false);
-  }
 
   return (
     <>
       <div className="page-header">
         Welcome to birthday saver!
-        <button className="btn" onClick={handleOpenModal}>
-          {isOpen ? "Close Form" : "Add Bday"}
-        </button>
+        <Link to="/add">
+          <button className="btn">Add Birthday!</button>
+        </Link>
       </div>
-      {isOpen ? <NewBday /> : null}
       <ul className="posts-list">
         {bdays.map((bday: Birthday) => (
           <li key={bday.id}>
             {bday.name}, {bday.date}, {bday.stokeLevel}
-            <form method="POST" action="/api/remove/">
+            <form method="POST" action="/remove">
               <input type="hidden" name="_method" value="delete" />
               <input type="hidden" name="id" value={bday.id} />
               <button className="btn btn-delete">Remove</button>

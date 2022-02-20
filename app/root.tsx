@@ -1,6 +1,5 @@
 import { Outlet, LiveReload, Link, Links, Meta, Scripts } from "remix";
 import globalStylesUrl from "~/styles/global.css";
-import { db } from "~/utils/db.server";
 
 export const links = () => [{ rel: "stylesheet", href: globalStylesUrl }];
 
@@ -16,7 +15,7 @@ export const meta = () => {
 
 export default function App() {
   return (
-    <Document>
+    <Document title={'Birthday Saver'}>
       <Layout>
         <Outlet />
       </Layout>
@@ -24,7 +23,7 @@ export default function App() {
   );
 }
 
-const Document = ({ children, title }) => {
+const Document = ({ children, title } : { children: any, title: any }) => {
   return (
     <html lang="en">
       <head>
@@ -44,14 +43,14 @@ const Document = ({ children, title }) => {
   );
 };
 
-const Layout = ({ children }) => {
+const Layout = ({ children } : { children: any }) => {
   return (
     <>
       <nav className="navBar">
         <Link to="/login" className="btn btn-reverse">
           Logout
         </Link>
-      </nav>
+        </nav>
       <h1>Birthday Saver</h1>
 
       <div className="container">{children}</div>
@@ -59,10 +58,10 @@ const Layout = ({ children }) => {
   );
 };
 
-export const ErrorBoundary = ({ error }) => {
+export const ErrorBoundary = ({ error } : {error:any}) => {
   console.log(error);
   return (
-    <Document>
+    <Document title="">
       <Layout>
         <h1 className="error-header">Error!</h1>
         <p>{error.message}</p>

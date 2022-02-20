@@ -30,6 +30,7 @@
     "postinstall": "remix setup node",
     "build": "cross-env NODE_ENV=production remix build",
     "dev": "cross-env NODE_ENV=development remix dev",
-    "start": "cross-env NODE_ENV=production remix-serve build"
+    "start": "cross-env NODE_ENV=production remix-serve build",
+    "seed": "node prisma/seed"
   }
 }
