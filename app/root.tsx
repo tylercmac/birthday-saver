@@ -1,5 +1,14 @@
-import { Outlet, LiveReload, Link, Links, Meta, Scripts } from "remix";
+import {
+  Outlet,
+  LiveReload,
+  Link,
+  Links,
+  Meta,
+  Scripts,
+  useLoaderData,
+} from "remix";
 import globalStylesUrl from "~/styles/global.css";
+import { getUser } from "./utils/session.server";
 
 export const links = () => [{ rel: "stylesheet", href: globalStylesUrl }];
 
@@ -13,9 +22,17 @@ export const meta = () => {
   };
 };
 
+export const loader = async ({ request }) => {
+  const user = await getUser(request);
+  const data = {
+    user,
+  };
+  return data;
+};
+
 export default function App() {
   return (
-    <Document title={'Birthday Saver'}>
+    <Document title={"Birthday Saver"}>
       <Layout>
         <Outlet />
       </Layout>
@@ -23,7 +40,7 @@ export default function App() {
   );
 }
 
-const Document = ({ children, title } : { children: any, title: any }) => {
+const Document = ({ children, title }: { children: any; title: any }) => {
   return (
     <html lang="en">
       <head>
@@ -43,14 +60,24 @@ const Document = ({ children, title } : { children: any, title: any }) => {
   );
 };
 
-const Layout = ({ children } : { children: any }) => {
+const Layout = ({ children }: { children: any }) => {
+  const { user } = useLoaderData();
+
   return (
     <>
       <nav className="navBar">
-        <Link to="/login" className="btn btn-reverse">
-          Logout
-        </Link>
-        </nav>
+        {user ? (
+          <form action="/auth/logout" method="POST">
+            <button className="btn btn-reverse" type="submit">
+              Logout {user.username}
+            </button>
+          </form>
+        ) : (
+          <a href="/auth/login" className="btn btn-reverse">
+            Login
+          </a>
+        )}
+      </nav>
       <h1>Birthday Saver</h1>
 
       <div className="container">{children}</div>
@@ -58,7 +85,7 @@ const Layout = ({ children } : { children: any }) => {
   );
 };
 
-export const ErrorBoundary = ({ error } : {error:any}) => {
+export const ErrorBoundary = ({ error }: { error: any }) => {
   console.log(error);
   return (
     <Document title="">
