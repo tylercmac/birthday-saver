@@ -1,6 +1,6 @@
 
 import { db } from '~/utils/db.server'
-import { json, redirect, useActionData } from 'remix'
+import { json, redirect, useActionData, Link } from 'remix'
 
 const validateName = (name: string) => {
   if (typeof name !== 'string' || name.length > 255) {
@@ -85,6 +85,11 @@ export default function Add() {
           <button type="submit" className="btn">
             Add Birthday
           </button>
+          <a href="/">
+            <button type="button" className="btn btn-reverse">
+              Back to Home
+            </button>
+          </a>
         </div>
       </form>
     </div>

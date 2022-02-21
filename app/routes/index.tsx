@@ -1,10 +1,6 @@
-import { useLoaderData, useActionData, Link  } from "remix";
+import { useLoaderData, useActionData, Link, Links  } from "remix";
 import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
-
-export const links = () => {
-
-}
 
 export let loader: LoaderFunction = async () => {
   const data = {
@@ -32,9 +28,9 @@ export default function Home() {
     <>
       <div className="page-header">
         Welcome to birthday saver!
-        <Link to="/add">
+        <a href="/add">
           <button className="btn">Add Birthday!</button>
-        </Link>
+        </a>
       </div>
       <ul className="posts-list">
         {bdays.map((bday: Birthday) => (
