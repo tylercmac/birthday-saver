@@ -22,7 +22,7 @@ export const meta = () => {
   };
 };
 
-export const loader = async ({ request }) => {
+export const loader = async ({ request } : { request: Request }) => {
   const user = await getUser(request);
   const data = {
     user,

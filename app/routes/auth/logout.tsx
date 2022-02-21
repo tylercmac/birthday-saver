@@ -2,7 +2,7 @@ import { redirect } from 'remix'
 import { logout } from '~/utils/session.server'
 
 export const action = async (request: Request) => {
-  return logout(request)
+  return logout(request as any)
 }
 
 export const loader = async () => {

@@ -25,7 +25,7 @@ export let loader: LoaderFunction = async ({ request }) => {
   return data;
 };
 
-export const action = async ({request}) => {
+export const action = async ({request} : { request: Request }) => {
   // Handle server response here when deleting
 }
 
