@@ -3,18 +3,24 @@ import { redirect } from "remix";
 
 export const action = async ({ request } : { request: any }) => {
   const form = await request.formData();
-  const id = form.get("id");
+  let ids = form.get("ids");
+  ids = ids.split(",")
+  console.log({ ids });
+  
   const method = form.get("_method")
   
   if (method === "delete") {
-    const birthday = await db.birthday.findUnique({
+    ids.forEach(async id =>  {
+
+      const birthday = await db.birthday.findUnique({
       where: { id: id },
-    });
+      })
 
-    if (!birthday) throw new Error("birthday not found");
+      if (!birthday) throw new Error("birthday not found");
 
-    await db.birthday.delete({ where: { id: id } });
-  }
+      await db.birthday.delete({ where: { id: id } });
+    })
+  }   
 
   return redirect("/");
 };

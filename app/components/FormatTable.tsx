@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState, ChangeEvent } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,6 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Checkbox from '@mui/material/Checkbox';
+import DeleteIcon from '@mui/icons-material/Delete';
 import TablePagination from "@mui/material/TablePagination";
 import moment from "moment";
 
@@ -17,18 +19,60 @@ type Birthday = {
   daysUntil: number;
 };
 
-export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
+export default function FormatTable({ bdays }: { bdays: Birthday[] }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selected, setSelected] = useState([])
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const tableStyles = () => {
+    return (
+      {
+        minWidth: 650,
+        fontFamily: "Poppins, sans-serif",
+      })
+
+  }
+
+  const handleChangePage = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent> | null, page: number) => {
+    setPage(page);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const isSelected = (id: number) => {
+    selected.findIndex((index) => index === id && index !== -1)
+  }
+
+  const handleClick = (e: Event, id: string) => {
+    const selectedIndex: number = selected.findIndex(index => index === id)
+    let newSelected: React.SetStateAction<never[]> = []
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    setSelected(newSelected);
+
+  }
+
+  const handleDelete = () => {
+    if(confirm('Are you sure you want to delete this?')) {
+      setTimeout(() => method = 'delete', 1000)
+    } else setTimeout(() => method = 'notdelete', 1000)
+  }
+
 
   const styleRow = (daysUntil: number) => {
     // if (daysUntil === 0) return { backgroundImage: `url("partyimg.jpg"`};
@@ -56,17 +100,27 @@ export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
   });
 
   const sortByClosest = addTableProps.sort(
-    (a: Object, b: Object) => a.daysUntil - b.daysUntil
+    (a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil
   );
 
   bdays = sortByClosest;
+  let method
 
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={tableStyles()} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>
+                {selected.length ?
+                  <form method="POST" action="/remove">
+                    <input type="hidden" name="_method" value={method} />
+                    <input type="hidden" name="ids" value={selected} />
+                    <button className="btn btn-delete" onClick={() => handleDelete()}><DeleteIcon /></button>
+                  </form>
+                  : <div className="padding" />}
+              </TableCell>
               <TableCell>Name</TableCell>
               <TableCell align="right">Bday</TableCell>
               <TableCell align="right">Days Until</TableCell>
@@ -74,27 +128,51 @@ export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bdays.map((row) => (
-              <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.daysUntil}</TableCell>
-                <TableCell align="right">{row.stokeLevel}</TableCell>
-              </TableRow>
-            ))}
+            {bdays.map((row) => {
+              const isItemSelected: void = isSelected(row.id)
+
+              return (
+                <TableRow
+                  key={row.id}
+                  sx={styleRow(row.daysUntil)}
+                  onClick={(e) => handleClick(e, row.id)}
+                  role="checkbox"
+                  selected={isItemSelected}
+                  aria-checked={isItemSelected}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      checked={isItemSelected}
+                      inputProps={{
+                        // 'aria-labelledby': labelId,
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell
+                    sx={{ fontFamily: 'Poppins' }}
+                    component="th"
+                    scope="row"
+                  >
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right">{row.daysUntil}</TableCell>
+                  <TableCell align="right">{row.stokeLevel}</TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10]}
         component="div"
         count={bdays.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onRowsPerPageChange={(event) => handleChangeRowsPerPage(event)}
       />
     </>
   );

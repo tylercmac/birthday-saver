@@ -1,8 +1,10 @@
-import { useLoaderData, useActionData, Link } from "remix";
+import { useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
+import { useState, useEffect } from 'react'
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable"
+import TextField from '@mui/material/TextField'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
@@ -21,7 +23,6 @@ export let loader: LoaderFunction = async ({ request }) => {
   };
 
   if (!data) return null;
-
   return data;
 };
 
@@ -29,32 +30,31 @@ export const action = async ({ request }: { request: Request }) => {
   // Handle server response here when deleting
 };
 
+
+
+
 export default function Home() {
+  const [bdays, setBdays] = useState([])
   const data = useLoaderData();
+  
+  const filterNames = (e: Event | null) => {
+    setBdays(bdays.filter(bday => bday.name.startsWith(e.target.value)))
+  }
+
+  useEffect(() => {
+    setBdays(data.bdays)
+  }, [])
 
   return (
     <>
       <div className="page-header">
-        Welcome to birthday saver!
+        <TextField id="standard-basic" label="Find name" variant="standard" onChange={e => filterNames(e)}/>
+        <div className="page-text">Welcome to birthday saver!</div>
         <a href="/add">
           <button className="btn">Add Birthday!</button>
         </a>
       </div>
-      {/* <ul className="posts-list">
-        {data
-          ? data.bdays.map((bday: Birthday) => (
-              <li key={bday.id}>
-                {bday.name}, {bday.date}, {bday.stokeLevel}
-                <form method="POST" action="/remove">
-                  <input type="hidden" name="_method" value="delete" />
-                  <input type="hidden" name="id" value={bday.id} />
-                  <button className="btn btn-delete">Remove</button>
-                </form>
-              </li>
-            ))
-          : null}
-      </ul> */}
-      {data ? <FormatTable bdays={data.bdays} /> : null}
+      {data ? <FormatTable bdays={bdays} /> : null}
     </>
   );
 }

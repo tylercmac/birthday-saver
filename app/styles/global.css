@@ -9,6 +9,7 @@
 body {
   font-family: "Poppins", sans-serif;
   padding: 3rem;
+  background: #f9f9f9;
 }
 
 a {
@@ -87,7 +88,7 @@ h1 {
 }
 
 .btn-reverse {
-  background: #fff;
+  background: #f9f9f9;
   color: #000;
   border-color: #000;
 }
@@ -110,7 +111,13 @@ h1 {
   color: #fff;
   border-color: darkred;
   font-size: 13px;
-  padding: 5px 10px;
+  padding: 3px 4px 1px 4px;
+  margin: 0;
+}
+
+.main-title {
+  margin-bottom: 7rem;
+  font-size: 3rem;
 }
 
 .page-header {
@@ -120,17 +127,18 @@ h1 {
   margin-bottom: 30px;
 }
 
+.page-text {
+  color: cornflowerblue;
+  font-size: 20px;
+  font-style: italic;
+}
+
 .page-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
 }
-/* 
-.bday-form {
-  display: flex;
-  justify-content: center;
-} */
 
 .form-control {
   margin: 20px 0;
@@ -184,6 +192,10 @@ h1 {
 
 .posts-list li h3 {
   margin-bottom: 5px;
+}
+
+.padding {
+  padding: 17px 16px;
 }
 
 .error {

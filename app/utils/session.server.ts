@@ -62,6 +62,8 @@ export const createUserSession = async (userId: string, redirectTo: string) => {
 }
 
 export const getUserSession = (request: Request ) => {
+  console.log('made it here');
+  
   return storage.getSession(request.headers.get('Cookie'))
 }
 
