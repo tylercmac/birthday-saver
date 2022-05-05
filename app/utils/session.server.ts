@@ -66,12 +66,12 @@ export const getUserSession = (request: Request ) => {
 }
 
 export const getUser = async (request: Request) => {
-  
   const session = await getUserSession(request)
   
   const userId = session.get('userId')
 
   if (!userId || typeof userId !== 'string') {
+    // return redirect('/auth/login')
     return null
   }
 
@@ -79,9 +79,9 @@ export const getUser = async (request: Request) => {
     const user = await db.user.findUnique({
       where: { id: userId }
     })
-    
     return user
   } catch (error) {
+    // return redirect('/auth/login')
     return null
   }
 }

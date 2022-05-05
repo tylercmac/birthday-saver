@@ -1,6 +1,6 @@
 import { db } from "~/utils/db.server";
 import { json, redirect, useActionData } from "remix";
-import { getUser } from '~/utils/session.server'
+import { getUser } from "~/utils/session.server";
 
 const validateName = (name: string) => {
   if (typeof name !== "string" || name.length > 255) {
@@ -22,7 +22,7 @@ const validateStokeLevel = (stokeLevel: number) => {
 
 export const action = async ({ request }: { request: any }) => {
   const form = await request.formData();
-  const user = await getUser(request)
+  const user = await getUser(request);
   const name = form.get("name");
   const date = form.get("date");
   let stokeLevel = form.get("stokeLevel");
@@ -40,14 +40,15 @@ export const action = async ({ request }: { request: any }) => {
     console.log(fieldErrors);
     return json({ fieldErrors, fields }, { status: 400 });
   }
-
-  const bday = await db.birthday.create({ data: {...fields, userId: user.id }});
-
-  if (!bday) {
-    throw new Error("Unable to create birthday");
-  }
-
-  return redirect("/");
+  if (user) {
+    const bday = await db.birthday.create({
+      data: { ...fields, userId: user.id },
+    });
+    if (!bday) {
+      throw new Error("Unable to create birthday");
+    }
+    return redirect("/");
+  } else redirect("/auth/login");
 };
 
 export default function Add() {

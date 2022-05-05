@@ -21,11 +21,11 @@ export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -56,10 +56,10 @@ export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
   });
 
   const sortByClosest = addTableProps.sort(
-    (a: Object, b: Object) => a.daysUntil - b.daysUntil
+    (a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil
   );
 
-  bdays = sortByClosest;
+  const bdayArr = sortByClosest;
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function FormatTable({ bdays }: { bdays: [Birthday] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bdays.map((row) => (
+            {bdayArr.map((row) => (
               <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
                 <TableCell component="th" scope="row">
                   {row.name}

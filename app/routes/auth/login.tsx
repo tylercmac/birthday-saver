@@ -67,9 +67,6 @@ export const action: ActionFunction = async ({ request }) => {
       } 
       
       return createUserSession(newUser.id, '/')
-      // check if user existd
-      //  create user
-      // create user session
     }
 
     default: {

@@ -78,21 +78,21 @@ const Layout = ({ children }: { children: any }) => {
           </a>
         )}
       </nav>
-      <h1>Birthday Saver</h1>
+      <h1>Ty's Birthday Saver</h1>
 
       <div className="container">{children}</div>
     </>
   );
 };
 
-export const ErrorBoundary = ({ error }: { error: any }) => {
-  console.log(error);
-  return (
-    <Document title="">
-      <Layout>
-        <h1 className="error-header">Error!</h1>
-        <p>{error.message}</p>
-      </Layout>
-    </Document>
-  );
-};
+// export const ErrorBoundary = ({ error }: { error: any }) => {
+//   console.log(error);
+//   return (
+//     <Document title="">
+//       <Layout>
+//         <h1 className="error-header">Error!</h1>
+//         <p>{error.message}</p>
+//       </Layout>
+//     </Document>
+//   );
+// };
