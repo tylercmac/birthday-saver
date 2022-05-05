@@ -6,6 +6,7 @@ import {
   Meta,
   Scripts,
   useLoaderData,
+  redirect,
 } from "remix";
 import globalStylesUrl from "~/styles/global.css";
 import { getUser } from "./utils/session.server";
@@ -24,11 +25,18 @@ export const meta = () => {
 
 export const loader = async ({ request } : { request: Request }) => {
   const user = await getUser(request);
+  console.log(user);
+  
+  if (!user) redirect('/auth/butts')
+
   const data = {
     user,
   };
+
   return data;
 };
+
+export const unstable_shouldReload = () => false
 
 export default function App() {
   return (
@@ -40,7 +48,7 @@ export default function App() {
   );
 }
 
-const Document = ({ children, title }: { children: any; title: any }) => {
+export const Document = ({ children, title }: { children: any; title: any }) => {
   return (
     <html lang="en">
       <head>
@@ -60,7 +68,7 @@ const Document = ({ children, title }: { children: any; title: any }) => {
   );
 };
 
-const Layout = ({ children }: { children: any }) => {
+export const Layout = ({ children }: { children: any }) => {
   const { user } = useLoaderData();
 
   return (
@@ -78,7 +86,7 @@ const Layout = ({ children }: { children: any }) => {
           </a>
         )}
       </nav>
-      <h1>Ty's Birthday Saver</h1>
+      <h1 className="main-title">{user ? `${user.username}'s` : ''} Birthday Saver</h1>
 
       <div className="container">{children}</div>
     </>

@@ -5,10 +5,10 @@ const bdays = require("../public/bdays.json");
 async function seed() {
   const joe = await prisma.user.create({
     data: {
-      username: "joemamma",
+      username: "tylercmac",
       // pwd: twixrox
       passwordHash:
-        "$2b$10$K7L1OJ45/4Y2nIvhRVpCe.FSmhDdWoXehVzJptJ/op0lSsvqNu/1u",
+        "$2a$10$pldxgbilqWUSiF4n8sPLieVHL0fdya.GFK1KnSbsIw2PZ/81PAZ/m",
     },
   });
 

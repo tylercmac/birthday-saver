@@ -1,5 +1,6 @@
-import { useLoaderData, redirect, useActionData, Link } from "remix";
+import { useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
+import { useState, useEffect } from 'react'
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable";
@@ -27,6 +28,9 @@ export const action = async ({ request }: { request: Request }) => {
   // Handle server response here when deleting
 };
 
+
+
+
 export default function Home() {
   const { data, user } = useLoaderData();
   return (
@@ -46,21 +50,7 @@ export default function Home() {
           </>
         )}
       </div>
-      {/* <ul className="posts-list">
-        {data
-          ? data.bdays.map((bday: Birthday) => (
-              <li key={bday.id}>
-                {bday.name}, {bday.date}, {bday.stokeLevel}
-                <form method="POST" action="/remove">
-                  <input type="hidden" name="_method" value="delete" />
-                  <input type="hidden" name="id" value={bday.id} />
-                  <button className="btn btn-delete">Remove</button>
-                </form>
-              </li>
-            ))
-          : null}
-      </ul> */}
-      {data ? <FormatTable bdays={data.bdays} /> : null}
+      {data ? <FormatTable bdays={data} /> : null}
     </>
   );
 }

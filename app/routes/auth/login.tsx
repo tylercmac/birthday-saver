@@ -1,5 +1,5 @@
 import { useActionData, json, redirect } from "remix";
-import { db } from "../../utils/db.server";
+import { useEffect } from 'react'
 import { login, createUserSession, register } from "../../utils/session.server";
 import type { ActionFunction } from "remix";
 
@@ -80,9 +80,12 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Login() {
+  useEffect(() => {
+    if (sessionStorage.getItem('bday_session')) redirect('/') 
+  }, [])
+  
   const actionData = useActionData();
 
-  // if (sessionStorage.getItem('bday_session')) return redirect('/')
 
   return (
     <div className="auth-container">
@@ -146,3 +149,6 @@ export default function Login() {
     </div>
   );
 }
+
+
+
