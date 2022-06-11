@@ -5,12 +5,11 @@ export const action = async ({ request } : { request: any }) => {
   const form = await request.formData();
   let ids = form.get("ids");
   ids = ids.split(",")
-  console.log({ ids });
   
   const method = form.get("_method")
   
   if (method === "delete") {
-    ids.forEach(async id =>  {
+    ids.forEach(async (id: string) =>  {
 
       const birthday = await db.birthday.findUnique({
       where: { id: id },

@@ -111,13 +111,17 @@ h1 {
   color: #fff;
   border-color: darkred;
   font-size: 13px;
-  padding: 3px 4px 1px 4px;
+  padding: 5px;
   margin: 0;
 }
 
+.form {
+  width: 1rem;
+}
+
 .main-title {
-  margin-bottom: 7rem;
-  font-size: 3rem;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
 }
 
 .page-header {
@@ -195,7 +199,11 @@ h1 {
 }
 
 .padding {
-  padding: 17px 16px;
+  padding: 10px 16px;
+}
+
+.trash-padding {
+  padding: 10px 1px;
 }
 
 .error {

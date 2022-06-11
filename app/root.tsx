@@ -25,7 +25,6 @@ export const meta = () => {
 
 export const loader = async ({ request } : { request: Request }) => {
   const user = await getUser(request);
-  console.log(user);
   
   if (!user) redirect('/auth/butts')
 
@@ -58,6 +57,7 @@ export const Document = ({ children, title }: { children: any; title: any }) => 
         <Links />
         <Scripts />
         <title>{title ? title : "Birthday Saver"}</title>
+        <script src="https://kit.fontawesome.com/80f2238071.js" crossOrigin="anonymous"></script>
       </head>
       <body>
         {children}
@@ -93,14 +93,14 @@ export const Layout = ({ children }: { children: any }) => {
   );
 };
 
-// export const ErrorBoundary = ({ error }: { error: any }) => {
-//   console.log(error);
-//   return (
-//     <Document title="">
-//       <Layout>
-//         <h1 className="error-header">Error!</h1>
-//         <p>{error.message}</p>
-//       </Layout>
-//     </Document>
-//   );
-// };
+export const ErrorBoundary = ({ error }: { error: any }) => {
+  console.log(error);
+  return (
+    <Document title="ERROR">
+      {/* <Layout> */}
+        <h1 className="error-header">Error!</h1>
+        <p>{error.message}</p>
+      {/* </Layout> */}
+    </Document>
+  );
+};
