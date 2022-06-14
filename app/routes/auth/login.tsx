@@ -1,12 +1,16 @@
 import { useActionData, json, redirect } from "remix";
 import { useEffect } from 'react'
-import { login, createUserSession, register } from "../../utils/session.server";
+import { login, createUserSession, register, isUnique } from "../../utils/session.server";
 import type { ActionFunction } from "remix";
 
-const validateUsername = (name: string) => {
+const validateUsername = async (loginType: string, name: string) => {
   if (typeof name !== "string" || name.length < 4) {
     return "Username should be at least 3 characters long";
-  } else if (!name) return "A username is required";
+  } else if (loginType === "register") {
+    const isUniqueUser = await isUnique(name)
+    if (!isUniqueUser) return "Username already registered";
+  }
+  else if (!name) return "A username is required";
 };
 
 const validatePassword = (password: string) => {
@@ -31,7 +35,7 @@ export const action: ActionFunction = async ({ request }) => {
   };
 
   const fieldErrors = {
-    username: validateUsername(username),
+    username: await validateUsername(loginType, username),
     password: validatePassword(password),
   };
 

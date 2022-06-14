@@ -23,12 +23,24 @@ export const login = async ({ username, password} : { username: string, password
 
 export async function register({ username, password} : { username: string, password: string}) {
   const passwordHash = await bcrypt.hash(password, 10)
+
   return db.user.create({
     data: {
       username,
       passwordHash
     }
   })
+}
+
+export async function isUnique(username: string) {
+  const user = await db.user.findUnique({
+    where: {
+      username
+    }
+  })
+
+  if (user) return false 
+  else return true
 }
 
 // Create session scret
