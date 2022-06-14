@@ -246,6 +246,18 @@ h1 {
   
 }
 
+@media (max-width: 600px) {
+  .stoke-col {
+    display: none!important;
+  }
+  .form {
+    padding: 8px!important;
+  }
+  .main-title {
+    margin-bottom: 1rem;
+  }
+}
+
 @media (max-width: 425px) {
   body {
     padding: 1rem;

@@ -4,8 +4,7 @@ import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable";
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+const { AutocompleteBday } = require("../components/AutocompleteBday")
 
 type Birthday = {
   id: number;
@@ -48,25 +47,13 @@ export default function Home() {
   return (
     <>
       <div className="page-header">
-        Welcome to birthday saver
         {user ? (
-        <Autocomplete
-          onInputChange={(event, newInputValue) => {
-            manageBdays(newInputValue)
-          }}
-          options={data.bdays.map((bday: Birthday) => bday.name)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search input"
-              InputProps={{
-                ...params.InputProps,
-                type: 'search',
-              }}
-            />
-          )}
-          sx={{ width: "50%" }}
-        />
+          <>
+            <AutocompleteBday 
+              bdays={data.bdays} 
+              manageBdays={manageBdays} 
+              />
+          </>
         ): ""}
         {user ? (
           <a href="/add">

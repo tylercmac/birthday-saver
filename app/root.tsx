@@ -87,7 +87,6 @@ export const Layout = ({ children }: { children: any }) => {
         )}
       </nav>
       <h1 className="main-title">{user ? `${user.username}'s` : ''} Birthday Saver</h1>
-
       <div className="container">{children}</div>
     </>
   );

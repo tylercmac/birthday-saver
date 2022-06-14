@@ -1,5 +1,4 @@
 import { MouseEvent, useState, ChangeEvent } from "react";
-import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,12 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
 import TablePagination from "@mui/material/TablePagination";
 import moment from "moment";
-import { db } from "~/utils/db.server";
-import { getUser } from "~/utils/session.server";
-import type { LoaderFunction } from "remix";
 import { useLoaderData } from "remix";
 
 type Birthday = {
@@ -30,7 +25,8 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
 
   const tableStyles = () => {
     return {
-      minWidth: 650,
+      // minWidth: 650,
+      height: "1rem",
       fontFamily: "Poppins, sans-serif",
     };
   };
@@ -51,12 +47,16 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
 
   const styleRow = (daysUntil: number) => {
     // if (daysUntil === 0) return { backgroundImage: `url("partyimg.jpg"`};
-    if (daysUntil === 0) return { background: "#00BFFF" };
-    else if (daysUntil === 1) return { background: "#B22222" };
-    else if (daysUntil <= 5) return { background: "#E9967A" };
-    else if (daysUntil <= 10) return { background: "#F0E68C" };
-    else if (daysUntil <= 30) return { background: "#FAFAD2" };
-    else return {};
+    let cssObj = { 
+      background: "#FFFF", 
+      height: "1rem"
+    }
+    if (daysUntil === 0) cssObj.background = "#00BFFF";
+    else if (daysUntil === 1) cssObj.background = "#B22222";
+    else if (daysUntil <= 5) cssObj.background = "#E9967A";
+    else if (daysUntil <= 10) cssObj.background = "#F0E68C";
+    else if (daysUntil <= 30) cssObj.background = "#FAFAD2";
+    return cssObj;
   };
 
   const calcDaysFromToday = (date: string) => {
@@ -84,14 +84,14 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={tableStyles()} aria-label="simple table">
+        <Table sx={tableStyles()} aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell align="right">Bday</TableCell>
               <TableCell align="right">Days Until</TableCell>
-              <TableCell align="right">Stoke</TableCell>
+              <TableCell className="stoke-col" align="right">Stoke</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,12 +106,12 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
                     </button>
                   </form>
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.date}</TableCell>
                 <TableCell align="right">{row.daysUntil}</TableCell>
-                <TableCell align="right">{row.stokeLevel}</TableCell>
+                <TableCell className="stoke-col" align="right">{row.stokeLevel}</TableCell>
               </TableRow>
             ))}
           </TableBody>
