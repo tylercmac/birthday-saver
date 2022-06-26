@@ -29,6 +29,10 @@ h1 {
   text-align: center;
 }
 
+.my-2 {
+  margin: 2rem 0 2rem 0;
+}
+
 .container {
   width: 100%;
   max-width: 960px;
@@ -124,9 +128,17 @@ h1 {
   font-size: 2.5rem;
 }
 
+.center {
+  justify-content: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
 .page-header {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 30px;
 }
@@ -255,12 +267,29 @@ h1 {
   }
   .main-title {
     margin-bottom: 1rem;
+    line-height: 1;
   }
 }
 
 @media (max-width: 425px) {
   body {
     padding: 1rem;
+  }
+
+}
+
+@media (max-width: 335px) {
+  .page-header {
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
+  body {
+    padding: .5rem;
+  }
+
+  .main-title {
+    margin-bottom: 0;
   }
 
 }

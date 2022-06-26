@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="page-header">
+      <div className={user ? "page-header between" : "page-header center"}>
         {user ? (
           <>
             <AutocompleteBday 
@@ -62,7 +62,7 @@ export default function Home() {
         ) : (
           <>
           <a href="/auth/login">
-          <em>Login to Add Birthdays!</em><br/>
+          <div className="my-2"><em>Login to Add Birthdays!</em></div><br/>
             <button className="btn">Add Birthday!</button>
           </a>
           </>
