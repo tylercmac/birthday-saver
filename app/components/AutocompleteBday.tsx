@@ -12,15 +12,16 @@ type Birthday = {
 interface AutoProps {
   manageBdays: Function;
   bdays: Birthday[]
+  filteredData: Birthday[]
 }
 
-module.exports.AutocompleteBday = ({manageBdays, bdays}: AutoProps) => {
+module.exports.AutocompleteBday = ({filteredData, manageBdays, bdays}: AutoProps) => {
   return (
     <Autocomplete
     onInputChange={(event, newInputValue: string) => {
       manageBdays(newInputValue)
     }}
-    options={bdays.map((bday: Birthday) => bday.name)}
+    options={filteredData.length ? filteredData.map((bday: Birthday) => bday.name) : [""]}
     renderInput={(params) => (
       <TextField
         {...params}
@@ -30,7 +31,6 @@ module.exports.AutocompleteBday = ({manageBdays, bdays}: AutoProps) => {
           ...params.InputProps,
           type: 'search',
         }}
-        // sx={{ padding: "3px", height: "20px" }}
       />
     )}
     sx={{ width: "50%" }}

@@ -1,16 +1,20 @@
 import { useActionData, json, redirect } from "remix";
-import { useEffect } from 'react'
-import { login, createUserSession, register, isUnique } from "../../utils/session.server";
+import { useEffect } from "react";
+import {
+  login,
+  createUserSession,
+  register,
+  isUnique,
+} from "../../utils/session.server";
 import type { ActionFunction } from "remix";
 
 const validateUsername = async (loginType: string, name: string) => {
   if (typeof name !== "string" || name.length < 4) {
     return "Username should be at least 3 characters long";
   } else if (loginType === "register") {
-    const isUniqueUser = await isUnique(name)
+    const isUniqueUser = await isUnique(name);
     if (!isUniqueUser) return "Username already registered";
-  }
-  else if (!name) return "A username is required";
+  } else if (!name) return "A username is required";
 };
 
 const validatePassword = (password: string) => {
@@ -46,7 +50,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   switch (loginType) {
     case "login": {
-      
       const user = await login({ username, password });
 
       if (!user) {
@@ -56,25 +59,23 @@ export const action: ActionFunction = async ({ request }) => {
         });
       }
 
-      return createUserSession(user.id, '/')
+      return createUserSession(user.id, "/");
     }
 
     case "register": {
-      
       const newUser = await register({ username, password });
 
       if (!newUser) {
         return badRequest({
           fields,
-          formError: 'Something went wrong'
-        })
-      } 
-      
-      return createUserSession(newUser.id, '/')
+          formError: "Something went wrong",
+        });
+      }
+
+      return createUserSession(newUser.id, "/");
     }
 
     default: {
-      
       return badRequest({
         fields,
         formError: "Login type is not valid",
@@ -83,13 +84,21 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
+const showPass = () => {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+};
+
 export default function Login() {
   useEffect(() => {
-    if (sessionStorage.getItem('bday_session')) redirect('/') 
-  }, [])
-  
-  const actionData = useActionData();
+    if (sessionStorage.getItem("bday_session")) redirect("/");
+  }, []);
 
+  const actionData = useActionData();
 
   return (
     <div className="auth-container">
@@ -132,9 +141,21 @@ export default function Login() {
             </div>
           </div>
           <div className="form-control">
-            <label htmlFor="password">Password</label>
+            <div className="passbox">
+              <label htmlFor="password">Password</label>
+              <div className="show">
+                <span className="show-pass">
+                  <em>Show Password</em>
+                </span>
+                <input
+                  className="passcheck"
+                  type="checkbox"
+                  onClick={() => showPass()}
+                />
+              </div>
+            </div>
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               defaultValue={actionData?.fields?.password}
@@ -153,6 +174,3 @@ export default function Login() {
     </div>
   );
 }
-
-
-

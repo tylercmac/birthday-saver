@@ -7,6 +7,7 @@ import {
   Scripts,
   useLoaderData,
   redirect,
+  useLocation
 } from "remix";
 import globalStylesUrl from "~/styles/global.css";
 import { getUser } from "./utils/session.server";
@@ -70,6 +71,8 @@ export const Document = ({ children, title }: { children: any; title: any }) => 
 
 export const Layout = ({ children }: { children: any }) => {
   const { user } = useLoaderData();
+  const location = useLocation();
+  const isLogin = location.pathname === '/auth/login'
 
   return (
     <>
@@ -81,7 +84,7 @@ export const Layout = ({ children }: { children: any }) => {
             </button>
           </form>
         ) : (
-          <a href="/auth/login" className="btn btn-reverse">
+          <a href="/auth/login" className={isLogin ? "hidden" : "btn btn-reverse"}>
             Login
           </a>
         )}

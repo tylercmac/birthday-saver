@@ -51,6 +51,7 @@ export default function Home() {
           <>
             <AutocompleteBday 
               bdays={data.bdays} 
+              filteredData={filteredData}
               manageBdays={manageBdays} 
               />
           </>
