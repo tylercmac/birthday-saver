@@ -46,11 +46,13 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
   };
 
   const styleRow = (daysUntil: number) => {
-    // if (daysUntil === 0) return { backgroundImage: `url("partyimg.jpg"`};
+    console.log({daysUntil})
     let cssObj = { 
-      background: "#FFFF", 
+      background: "#FFFF",  
+      // backgroundImage: "",
       height: "1rem"
     }
+    // if (daysUntil === 0) cssObj.backgroundImage = `url("partyimg.jpg"`;
     if (daysUntil === 0) cssObj.background = "#00BFFF";
     else if (daysUntil === 1) cssObj.background = "#B22222";
     else if (daysUntil <= 5) cssObj.background = "#E9967A";

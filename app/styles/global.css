@@ -9,7 +9,9 @@
 body {
   font-family: "Poppins", sans-serif;
   padding: 3rem;
-  background: #f9f9f9;
+  /* background-color: #ececec; */
+  background-color: #474747;
+  /* background-image: url("../../public/partyimg.jpg"); */
 }
 
 a {
@@ -126,6 +128,7 @@ h1 {
 .main-title {
   margin-bottom: 3rem;
   font-size: 2.5rem;
+  color: #fff;
 }
 
 .center {
@@ -154,6 +157,16 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
+}
+
+.add-back-btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-modal {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .form-control {
@@ -246,7 +259,7 @@ h1 {
 }
 
 .error {
-  color: darkred;
+  color: rgb(214, 0, 0);
 }
 
 .auth-container {
@@ -272,9 +285,29 @@ h1 {
 }
 
 .error-header {
-  color: darkred;
+  color: rgb(214, 0, 0);
   font-size: 4rem;
   font-style: bold;
+}
+
+label {
+  color: white;
+}
+
+.css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
+}
+
+.css-ghsjzk-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid rgb(255 255 255 / 100%) !important;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  color: white !important;
+}
+
+.css-levciy-MuiTablePagination-displayedRows {
+  color: white !important;
 }
 
 @media (max-width: 1000px) {
@@ -298,7 +331,7 @@ h1 {
     display: none !important;
   }
   .form {
-    padding: 8px !important;
+    padding: 4px !important;
   }
   .main-title {
     margin-bottom: 1rem;
@@ -323,6 +356,14 @@ h1 {
   }
 
   .main-title {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+  }
+
+  .btn-reverse {
+    padding: 8px;
+  }
+
+  .css-dsuxgy-MuiTableCell-root {
+    padding: 6px 4px !important;
   }
 }

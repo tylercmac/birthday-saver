@@ -18,6 +18,9 @@ const validateStokeLevel = (stokeLevel: number) => {
   if (typeof stokeLevel !== "number" || stokeLevel > 5 || stokeLevel < 0) {
     return "Stoke level should be a number between 0 and 5";
   }
+  if (!stokeLevel) {
+    return "Stoke level is required."
+  }
 };
 
 export const action = async ({ request }: { request: any }) => {
@@ -26,7 +29,9 @@ export const action = async ({ request }: { request: any }) => {
   const name = form.get("name");
   const date = form.get("date");
   let stokeLevel = form.get("stokeLevel");
-  stokeLevel = parseInt(stokeLevel);
+  if (stokeLevel) {
+    stokeLevel = parseInt(stokeLevel);
+  }
 
   const fields = { name, date, stokeLevel };
 
@@ -88,14 +93,16 @@ export default function Add() {
               </p>
             </div>
           </div>
-          <button type="submit" className="btn">
-            Add Birthday
-          </button>
-          <a href="/">
-            <button type="button" className="btn btn-reverse">
-              Back to Home
+          <div className="add-back-btns">
+            <button type="submit" className="btn">
+              Add Birthday
             </button>
-          </a>
+            <a href="/">
+              <button type="button" className="btn btn-reverse">
+                Back to Home
+              </button>
+            </a>
+          </div>
         </div>
       </form>
     </div>
