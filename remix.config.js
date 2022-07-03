@@ -2,10 +2,12 @@
  * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
-  ignoredRouteFiles: [".*"],
+  serverBuildTarget: "netlify",
+  ignoredRouteFiles: ["**/.*"],
+  server: "./server.js",
   appDirectory: "app",
   assetsBuildDirectory: "public/build",
-  serverBuildPath: "build/index.js",
+  serverBuildPath: ".netlify/functions-internal/server.js",
   publicPath: "/build/",
   devServerPort: 8002,
   devClientPort: 3001
