@@ -46,7 +46,6 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
   };
 
   const styleRow = (daysUntil: number) => {
-    console.log({daysUntil})
     let cssObj = { 
       background: "#FFFF",  
       // backgroundImage: "",
