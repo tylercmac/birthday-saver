@@ -5,7 +5,7 @@ type Birthday = {
   id: number;
   name: string;
   date: string;
-  stokeLevel: number;
+  stokelevel: number;
   daysUntil: number;
 };
 

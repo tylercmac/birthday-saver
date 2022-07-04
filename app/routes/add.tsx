@@ -28,17 +28,17 @@ export const action = async ({ request }: { request: any }) => {
   const user = await getUser(request);
   const name = form.get("name");
   const date = form.get("date");
-  let stokeLevel = form.get("stokeLevel");
-  if (stokeLevel) {
-    stokeLevel = parseInt(stokeLevel);
+  let stokelevel = form.get("stokeLevel");
+  if (stokelevel) {
+    stokelevel = parseInt(stokelevel);
   }
 
-  const fields = { name, date, stokeLevel };
+  const fields = { name, date, stokelevel };
 
   const fieldErrors = {
     name: validateName(name),
     date: validateDate(date),
-    stokeLevel: validateStokeLevel(stokeLevel),
+    stokeLevel: validateStokeLevel(stokelevel),
   };
 
   if (Object.values(fieldErrors).some(Boolean)) {
@@ -47,7 +47,7 @@ export const action = async ({ request }: { request: any }) => {
   }
   if (user) {
     const bday = await db.birthday.create({
-      data: { ...fields, userId: user.id },
+      data: { ...fields, userid: user.id },
     });
     if (!bday) {
       throw new Error("Unable to create birthday");

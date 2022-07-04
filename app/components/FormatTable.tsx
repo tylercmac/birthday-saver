@@ -14,7 +14,7 @@ type Birthday = {
   id: number;
   name: string;
   date: string;
-  stokeLevel: number;
+  stokelevel: number;
   daysUntil: number;
 };
 
@@ -112,7 +112,7 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
                 </TableCell>
                 <TableCell align="right">{row.date}</TableCell>
                 <TableCell align="right">{row.daysUntil}</TableCell>
-                <TableCell className="stoke-col" align="right">{row.stokeLevel}</TableCell>
+                <TableCell className="stoke-col" align="right">{row.stokelevel}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -2,31 +2,31 @@
   { 
     "name": "Ty McFarland", 
     "date": "04/26/1994", 
-    "stokeLevel": 0
+    "stokelevel": 0
   },
   { 
     "name": "Olya McFarland", 
     "date": "05/04/1995", 
-    "stokeLevel": 4
+    "stokelevel": 4
   },
   { 
     "name": "Kathaleen McFarland", 
     "date": "10/31/1960", 
-    "stokeLevel": 2
+    "stokelevel": 2
   },
   { 
     "name": "Koray Top", 
     "date": "03/07/1999", 
-    "stokeLevel": 1
+    "stokelevel": 1
   },
   { 
     "name": "Ariana Dueflas", 
     "date": "07/09/1999", 
-    "stokeLevel": 1
+    "stokelevel": 1
   },
   { 
     "name": "Siphokazi Louw", 
     "date": "01/31/1975", 
-    "stokeLevel": 3
+    "stokelevel": 3
   }
 ]

@@ -9,6 +9,6 @@ module.exports = {
   assetsBuildDirectory: "public/build",
   serverBuildPath: ".netlify/functions-internal/server.js",
   publicPath: "/build/",
-  devServerPort: 8002,
+  devServerPort: 5432,
   devClientPort: 3001
 };

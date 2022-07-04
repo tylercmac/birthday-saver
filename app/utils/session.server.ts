@@ -13,8 +13,9 @@ export const login = async ({ username, password} : { username: string, password
 
   if (!user) return null
 
+  // console.log({user})
 
-  const isCorrectPassword = await bcrypt.compare(password, user.passwordHash)
+  const isCorrectPassword = await bcrypt.compare(password, user.passwordhash)
 
   if (!isCorrectPassword) return null
 

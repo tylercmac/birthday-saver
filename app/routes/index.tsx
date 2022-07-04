@@ -10,7 +10,7 @@ type Birthday = {
   id: number;
   name: string;
   date: string;
-  stokeLevel: number;
+  stokelevel: number;
   daysUntil: number;
 };
 
@@ -21,10 +21,10 @@ export let loader: LoaderFunction = async ({ request }) => {
     data = {
       bdays: await db.birthday.findMany({
         where: {
-          userId: user.id,
+          userid: user.id,
         },
         take: 20,
-        select: { id: true, name: true, date: true, stokeLevel: true },
+        select: { id: true, name: true, date: true, stokelevel: true },
         orderBy: { date: "desc" },
       }),
     };
