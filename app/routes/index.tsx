@@ -1,10 +1,10 @@
-import { useLoaderData } from "remix";
-import { useState } from "react"
+import { useLoaderData, useActionData, redirect } from "remix";
+import { useState } from "react";
 import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable";
-const { AutocompleteBday } = require("../components/AutocompleteBday")
+const { AutocompleteBday } = require("../components/AutocompleteBday");
 
 type Birthday = {
   id: number;
@@ -28,44 +28,52 @@ export let loader: LoaderFunction = async ({ request }) => {
         orderBy: { date: "desc" },
       }),
     };
-    if (!data) return null
+    if (!data) return null;
   }
   return { data, user };
 };
 
-
 export default function Home() {
   const { data, user } = useLoaderData();
-  const [filteredData, setFilteredData] = useState<Birthday[]>(data ? data.bdays : "")
-  
+  const [filteredData, setFilteredData] = useState<Birthday[]>(
+    data ? data.bdays : ""
+  );
+
   const manageBdays = (input: string) => {
-      setFilteredData(data.bdays.filter((bday: Birthday) => {
-        return bday.name.toLowerCase().startsWith(input.toLowerCase())
-      }))
-  }
+    setFilteredData(
+      data.bdays.filter((bday: Birthday) => {
+        return bday.name.toLowerCase().startsWith(input.toLowerCase());
+      })
+    );
+  };
 
   return (
     <>
       <div className={user ? "page-header between" : "page-header center"}>
         {user ? (
           <>
-            <AutocompleteBday 
-              bdays={data.bdays} 
+            <AutocompleteBday
+              bdays={data.bdays}
               filteredData={filteredData}
-              manageBdays={manageBdays} 
-              />
+              manageBdays={manageBdays}
+            />
           </>
-        ): ""}
+        ) : (
+          ""
+        )}
         {user ? (
-          <a href="/add">
-            <button className="btn">Add Birthday!</button>
-          </a>
+            <a href="/add">
+              <button className="btn">Add Birthday!</button>
+            </a>
         ) : (
           <>
-          <a href="/auth/login">
-          <div className="my-2"><em>Login to Add Birthdays!</em></div><br/>
-            <button className="btn">Add Birthday!</button>
-          </a>
+            <a href="/auth/login">
+              <div className="my-2">
+                <em>Login to Add Birthdays!</em>
+              </div>
+              <br />
+              <button className="btn">Add Birthday!</button>
+            </a>
           </>
         )}
       </div>

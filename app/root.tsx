@@ -62,7 +62,7 @@ export const Document = ({ children, title }: { children: any; title: any }) => 
       </head>
       <body>
         {children}
-        {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
+        {process.env.NODE_ENV === "development" ? <LiveReload port={8002} /> : null}
         <Scripts />
       </body>
     </html>

@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import moment from "moment";
 import { useLoaderData } from "remix";
+import { EmailModal } from "../components/EmailModal";
 
 type Birthday = {
   id: number;
@@ -111,7 +112,7 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.daysUntil}</TableCell>
+                <TableCell className="column-daysuntil" align="right"><EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/>{row.daysUntil}</TableCell>
                 <TableCell className="stoke-col" align="right">{row.stokelevel}</TableCell>
               </TableRow>
             ))}

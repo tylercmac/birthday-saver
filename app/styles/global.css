@@ -262,6 +262,29 @@ h1 {
   color: rgb(214, 0, 0);
 }
 
+.email-modal {
+  display: inline !important;
+}
+
+.btn-sched-email {
+  width: 100%;
+}
+
+.email-notif-field {
+  width: 100%;
+  margin: 1rem 0 !important;
+}
+
+.days-before-select {
+  width: 50%;
+  margin: 0 auto;
+  margin: 1rem 0 0 0 !important;  
+}
+
+.helper-text {
+  margin-bottom: 1rem !important;
+}
+
 .auth-container {
   max-width: 600px;
   margin: auto;
@@ -336,6 +359,12 @@ label {
   .main-title {
     margin-bottom: 1rem;
     line-height: 1;
+  }
+}
+
+@media (max-width: 503px) {
+  .column-daysuntil {
+    padding: 4px 1px !important;
   }
 }
 
