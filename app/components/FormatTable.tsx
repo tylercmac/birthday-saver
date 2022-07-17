@@ -62,6 +62,7 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
   };
 
   const calcDaysFromToday = (date: string) => {
+    // TODO: Replace moment with maintained dep
     const today = moment().format("YYYY-MM-DD");
     const years = moment().diff(date, "years");
     const adjustToday = date.substring(5) === today.substring(5) ? 0 : 1;
