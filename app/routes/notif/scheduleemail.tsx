@@ -1,7 +1,4 @@
 import { redirect } from "remix";
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const msgService = process.env.TWILIO_MSG_SERVICE;
 const gmailPass = process.env.GMAIL_PASS;
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
