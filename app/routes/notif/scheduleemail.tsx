@@ -1,7 +1,7 @@
 import { redirect } from "remix";
 const gmailPass = process.env.GMAIL_PASS;
-const nodemailer = require('nodemailer');
-const cron = require('node-cron');
+import nodemailer from 'nodemailer';
+import cron from "node-cron";
 
 const setCron = (bday: string, dBefore: string) => {
   const trimBday = bday.slice(0, bday.length - 3)
@@ -52,7 +52,7 @@ export const action = async ({ request } : { request: any }) => {
       subject: `Birthday reminder for ${name}!`,
       text: `${name}'s birthday is in ${daysBefore} days!`,
       html: `<b>${name}'s birthday is in ${daysBefore} days!</b>`,
-    }, (err: Error) => console.log(err));
+    }, (err: Error | null) => console.log(err));
     console.log({ info });
   })
 

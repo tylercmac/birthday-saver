@@ -4,7 +4,7 @@ import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable";
-const { AutocompleteBday } = require("../components/AutocompleteBday");
+import { AutocompleteBday } from "../components/AutocompleteBday";
 
 type Birthday = {
   id: number;

@@ -1,6 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-const bdays = require("../public/bdays.json");
+import bdays from "../public/bdays.json";
 
 async function seed() {
   const joe = await prisma.user.create({
