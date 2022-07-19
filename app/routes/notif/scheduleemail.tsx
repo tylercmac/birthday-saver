@@ -1,7 +1,7 @@
 import { redirect } from "remix";
 const gmailPass = process.env.GMAIL_PASS;
 import nodemailer from 'nodemailer';
-import cron from "node-cron";
+import schedule from "node-schedule";
 
 const setCron = (bday: string, dBefore: string) => {
   const trimBday = bday.slice(0, bday.length - 3)
@@ -44,7 +44,8 @@ export const action = async ({ request } : { request: any }) => {
   });
 
   // Schedule cron job for this birthday
-  cron.schedule(cronString, async () => {
+  // schedule.scheduleJob(cronString, async () => {
+  schedule.scheduleJob('* * * * *', async () => {
     
     let info = await transporter.sendMail({
       from: 'thebdayapp@gmail.com',
