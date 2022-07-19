@@ -44,8 +44,7 @@ export const action = async ({ request } : { request: any }) => {
   });
 
   // Schedule cron job for this birthday
-  // schedule.scheduleJob(cronString, async () => {
-  schedule.scheduleJob('* * * * *', async () => {
+  schedule.scheduleJob(cronString, async () => {
     
     let info = await transporter.sendMail({
       from: 'thebdayapp@gmail.com',
