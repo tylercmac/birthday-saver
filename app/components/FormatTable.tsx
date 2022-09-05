@@ -15,6 +15,7 @@ type Birthday = {
   id: number;
   name: string;
   date: string;
+  age: number;
   stokelevel: number;
   daysUntil: number;
 };
@@ -71,10 +72,15 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
     return daysUntilBirthday;
   };
 
+  const findAge = (date: string) => {
+
+  }
+
   const addTableProps = () => {
     return (newData?newData:data.bdays).map((bday: Birthday) => {
       bday.daysUntil = calcDaysFromToday(bday.date);
-      bday.date = moment(bday.date).format("M/D/YY")
+      bday.date = moment(bday.date).format("M/D/YY");
+      bday.age = moment().diff(bday.date, "years");
       return bday})
   }
 
@@ -93,8 +99,8 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell align="right">Bday</TableCell>
+              <TableCell className="stoke-col" align="right">Current Age</TableCell>
               <TableCell align="right">Days Until</TableCell>
-              <TableCell className="stoke-col" align="right">Stoke</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -113,8 +119,8 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.date}</TableCell>
+                <TableCell className="stoke-col" align="right">{row.age}</TableCell>
                 <TableCell className="column-daysuntil" align="right"><EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/>{row.daysUntil}</TableCell>
-                <TableCell className="stoke-col" align="right">{row.stokelevel}</TableCell>
               </TableRow>
             ))}
           </TableBody>
