@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
-import FormatTable from "../components/FormatTable";
+import BirthdayGrid from "../components/BirthdayGrid";
 import AutocompleteBday from "../components/AutocompleteBday";
 
 type Birthday = {
@@ -78,7 +78,7 @@ export default function Home() {
           </>
         )}
       </div>
-      {data ? <FormatTable newData={filteredData} /> : null}
+      {data ? <BirthdayGrid newData={filteredData} /> : null}
     </>
   );
 }

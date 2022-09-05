@@ -8,8 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import moment from "moment";
-import { useLoaderData } from "remix";
-import { EmailModal } from "../components/EmailModal";
+import { confirmDialog, ConfirmDialog } from './ConfirmDialog';
+import { redirect, useLoaderData } from "remix";
+import { EmailModal } from "./EmailModal";
 
 type Birthday = {
   id: number;
@@ -20,7 +21,7 @@ type Birthday = {
   daysUntil: number;
 };
 
-export default function FormatTable({newData}: {newData: Birthday[]}) {
+export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [bdays, setBdays] = useState(newData);
@@ -107,13 +108,18 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
             {bdayArr.map((row: any) => (
               <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
                 <TableCell className="form">
-                  <form method="POST" action="/remove">
-                    <input type="hidden" name="_method" value="delete" />
-                    <input type="hidden" name="ids" value={row.id} />
-                    <button className="btn btn-delete">
-                      <i className="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                  </form>
+                  <button onClick={() => {
+                    confirmDialog('Are you sure you want to delete this birthday?', 
+                    async () => {
+                      await fetch(`/remove/${row.id}`)
+                      window.location.reload();
+                    })         
+                  }}
+                    className="btn btn-delete"
+                  >
+                    <i className="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                <ConfirmDialog />
                 </TableCell>
                 <TableCell>
                   {row.name}
