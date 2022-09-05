@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Form } from 'remix'
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -8,10 +9,17 @@ import Typography from '@mui/material/Typography';
 import AddAlertIcon from '@mui/icons-material/AddAlert';
 import FormHelperText from '@mui/material/FormHelperText';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -27,12 +35,19 @@ const style = {
 
 export function EmailModal({ name, bday, daysUntil } : { name: string, bday: string, daysUntil: string}) {
   const [open, setOpen] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [daysBefore, setDaysBefore] = React.useState('1');
+  const handleCloseSnack = () => setOpenSnackbar(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleChange = (event: SelectChangeEvent) => {
     setDaysBefore(event.target.value as string);
   };
+
+  const completeSchedule = () => {
+    setOpen(false);
+    setOpenSnackbar(true);
+  }
 
   return (
     <div className="email-modal">
@@ -53,30 +68,39 @@ export function EmailModal({ name, bday, daysUntil } : { name: string, bday: str
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Get an email notification for {name}'s bday!
             </Typography>
-              <form className="email-fields" method="POST" action="/notif/scheduleemail">
+              <Form className="email-fields" method="post" action="/notif/scheduleemail">
                 <TextField className="email-notif-field" name="email" id="email" label="Email Address" variant="outlined" />
                 <Select
                   labelId="demo-simple-select-label"
                   className="days-before-select"
-                  value={daysBefore}
                   label="Days before?"
                   onChange={handleChange}
+                  defaultValue={daysBefore}
                   >
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
                   <MenuItem value={1}>1</MenuItem>
                 </Select>
                 <FormHelperText className="helper-text">How many days before?</FormHelperText>
-                <button className="btn btn-sched-email" type="submit">
+                <button className="btn btn-sched-email" onClick={() => completeSchedule()} type="submit">
                   Schedule Email!
                 </button>
-                <input name="name" id="name" className="hidden" value={name}/>
-                <input name="bday" id="bday" className="hidden" value={bday}/>
-                <input name="days-before" id="days-before" className="hidden" value={daysBefore}/>
-              </form>
+                <input name="name" id="name" className="hidden" defaultValue={name}/>
+                <input name="bday" id="bday" className="hidden" defaultValue={bday}/>
+                <input name="days-before" id="days-before" className="hidden" defaultValue={daysBefore}/>
+              </Form>
           </Box>
         </Fade>
       </Modal>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleCloseSnack}
+      >
+        <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%'}}>
+          Email Scheduled!
+        </Alert>
+      </Snackbar>
     </div>
   );
       

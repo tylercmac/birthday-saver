@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import moment from "moment";
+import dayjs from "dayjs";
 import { confirmDialog, ConfirmDialog } from './ConfirmDialog';
 import { redirect, useLoaderData } from "remix";
 import { EmailModal } from "./EmailModal";
@@ -67,11 +67,10 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
   };
 
   const calcDaysFromToday = (date: string) => {
-    // TODO: Replace moment with maintained dep
-    const today = moment().format("YYYY-MM-DD");
-    const years = moment().diff(date, "years");
+    const today = dayjs().format("YYYY-MM-DD");
+    const years = dayjs().diff(date, "years");
     const adjustToday = date.substring(5) === today.substring(5) ? 0 : 1;
-    const nextBirthday = moment(date).add(years + adjustToday, "years");
+    const nextBirthday = dayjs(date).add(years + adjustToday, "years");
     const daysUntilBirthday = nextBirthday.diff(today, "days");
     return daysUntilBirthday;
   };
@@ -79,8 +78,8 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
   const addTableProps = () => {
     return bdays.map((bday: Birthday) => {
       bday.daysUntil = calcDaysFromToday(bday.date);
-      bday.date = moment(bday.date).format("M/D/YY");
-      bday.age = moment().diff(bday.date, "years");
+      bday.date = dayjs(bday.date).format("M/D/YY");
+      bday.age = dayjs().diff(bday.date, "years");
       return bday})
   }
 

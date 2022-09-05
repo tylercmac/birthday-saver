@@ -11,6 +11,7 @@
   to = "/.netlify/functions/server"
   status = 200
 
+# Comment out for local dev
 [functions]
   node_bundler = "esbuild"
 

@@ -31,7 +31,7 @@ export const action = async ({ request } : { request: any }) => {
 
   // Configure date for email cron job
   const cronString = setCron(bday, daysBefore)
-  
+  console.log({cronString, name, daysBefore, bday})
   // Setup transport for nodemailer
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -55,7 +55,6 @@ export const action = async ({ request } : { request: any }) => {
     }, (err: Error | null) => console.log(err));
     console.log({ info });
   })
-
   return redirect("/");
 };
 
