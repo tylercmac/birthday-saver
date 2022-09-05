@@ -21,7 +21,7 @@
     "@remix-run/serve": "^1.2.1",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.14.22",
+    "esbuild": "0.14.22",
     "moment": "^2.29.1",
     "node-schedule": "^2.1.0",
     "nodemailer": "^6.7.7",
@@ -48,7 +48,7 @@
   "sideEffects": false,
   "scripts": {
     "postinstall": "remix setup node",
-    "build": "remix build",
+    "tybuild": "remix build",
     "dev": "cross-env NODE_ENV=development netlify dev",
     "start": "cross-env NODE_ENV=production netlify dev",
     "seed": "node prisma/seed",
