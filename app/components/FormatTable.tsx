@@ -22,7 +22,8 @@ type Birthday = {
 
 export default function FormatTable({newData}: {newData: Birthday[]}) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [pageSize, setPageSize] = useState(10);
+  const [bdays, setBdays] = useState(newData);
   const { data } = useLoaderData();
 
   const tableStyles = () => {
@@ -38,12 +39,14 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
     page: number
   ) => {
     setPage(page);
+    // const offsetBdays = newData.slice((page * pageSize))
+    // setBdays(offsetBdays)
   };
 
-  const handleChangeRowsPerPage = (
+  const handleChangePageSize = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setRowsPerPage(+event.target.value);
+    setPageSize(+event.target.value);
     setPage(0);
   };
 
@@ -72,23 +75,20 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
     return daysUntilBirthday;
   };
 
-  const findAge = (date: string) => {
-
-  }
-
   const addTableProps = () => {
-    return (newData?newData:data.bdays).map((bday: Birthday) => {
+    return bdays.map((bday: Birthday) => {
       bday.daysUntil = calcDaysFromToday(bday.date);
       bday.date = moment(bday.date).format("M/D/YY");
       bday.age = moment().diff(bday.date, "years");
       return bday})
   }
 
-  const sortByClosest = addTableProps().sort(
-    (a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil
-  );
+  const sortAndSlice = 
+    addTableProps()
+      .sort((a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil)
+      .slice((page * pageSize), (page * pageSize) +10);
 
-  const bdayArr = sortByClosest;
+  const bdayArr = sortAndSlice;
 
   return (
     <>
@@ -98,7 +98,7 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
             <TableRow>
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
-              <TableCell align="right">Bday</TableCell>
+              <TableCell align="right">Birthday</TableCell>
               <TableCell className="stoke-col" align="right">Current Age</TableCell>
               <TableCell align="right">Days Until</TableCell>
             </TableRow>
@@ -130,10 +130,10 @@ export default function FormatTable({newData}: {newData: Birthday[]}) {
         rowsPerPageOptions={[10]}
         component="div"
         count={data.bdays.length}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={pageSize}
         page={page}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={(event) => handleChangeRowsPerPage(event)}
+        onRowsPerPageChange={(event) => handleChangePageSize(event)}
       />
     </>
   );

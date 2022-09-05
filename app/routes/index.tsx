@@ -4,12 +4,13 @@ import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import FormatTable from "../components/FormatTable";
-import { AutocompleteBday } from "../components/AutocompleteBday";
+import AutocompleteBday from "../components/AutocompleteBday";
 
 type Birthday = {
   id: number;
   name: string;
   date: string;
+  age: number;
   stokelevel: number;
   daysUntil: number;
 };

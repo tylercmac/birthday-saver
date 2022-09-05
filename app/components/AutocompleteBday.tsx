@@ -15,7 +15,7 @@ interface AutoProps {
   filteredData: Birthday[]
 }
 
-module.exports.AutocompleteBday = ({filteredData, manageBdays, bdays}: AutoProps) => {
+export default function AutocompleteBday ({filteredData, manageBdays, bdays}: AutoProps) {
   return (
     <Autocomplete
     onInputChange={(event, newInputValue: string) => {
