@@ -70,17 +70,21 @@ export const Document = ({ children, title }: { children: any; title: any }) => 
 };
 
 export const Layout = ({ children }: { children: any }) => {
-  const { user } = useLoaderData();
+  let data
+  if (useLoaderData()) {
+    data = useLoaderData();
+  }
   const location = useLocation();
   const isLogin = location.pathname === '/auth/login'
+  
 
   return (
     <>
       <nav className="navBar">
-        {user ? (
+        {data?.user?.username ? (
           <form action="/auth/logout" method="POST">
             <button className="btn btn-reverse" type="submit">
-              Logout {user.username}
+              Logout {data.user.username}
             </button>
           </form>
         ) : (
@@ -89,7 +93,7 @@ export const Layout = ({ children }: { children: any }) => {
           </a>
         )}
       </nav>
-      <h1 className="main-title">{user ? `${user.username}'s` : ''} Birthday Saver</h1>
+      <h1 className="main-title">{data?.user?.username ? `${data.user.username}'s` : ''} Birthday Saver</h1>
       <div className="container">{children}</div>
     </>
   );
@@ -99,10 +103,10 @@ export const ErrorBoundary = ({ error }: { error: any }) => {
   console.log(error);
   return (
     <Document title="ERROR">
-      {/* <Layout> */}
+      <Layout>
         <h1 className="error-header">Error!</h1>
         <p>{error.message}</p>
-      {/* </Layout> */}
+      </Layout>
     </Document>
   );
 };

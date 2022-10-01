@@ -37,14 +37,33 @@ export function EmailModal({ name, bday, daysUntil } : { name: string, bday: str
   const [open, setOpen] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [daysBefore, setDaysBefore] = React.useState('1');
+  const [email, setEmail] = React.useState('');
   const handleCloseSnack = () => setOpenSnackbar(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleChange = (event: SelectChangeEvent) => {
     setDaysBefore(event.target.value as string);
   };
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
 
-  const completeSchedule = () => {
+  const validateEmail = (email: string | null) => {
+    if (email?.length) {
+      const valid = String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+        return valid ? true : false
+      } else return true
+  };
+
+  const completeSchedule = (email: string) => {
+    if (!validateEmail(email)) {
+      throw new Error('Invalid Email')
+    }
+    
     setOpen(false);
     setOpenSnackbar(true);
   }
@@ -69,7 +88,7 @@ export function EmailModal({ name, bday, daysUntil } : { name: string, bday: str
               Get an email notification for {name}'s bday!
             </Typography>
               <Form className="email-fields" method="post" action="/notif/scheduleemail">
-                <TextField className="email-notif-field" name="email" id="email" label="Email Address" variant="outlined" />
+                <TextField error={validateEmail(email)} helperText='Invalid Email' className="email-notif-field" name="email" id="email" value={email} onChange={handleEmailChange} label="Email Address" variant="outlined" />
                 <Select
                   labelId="demo-simple-select-label"
                   className="days-before-select"
@@ -82,7 +101,7 @@ export function EmailModal({ name, bday, daysUntil } : { name: string, bday: str
                   <MenuItem value={1}>1</MenuItem>
                 </Select>
                 <FormHelperText className="helper-text">How many days before?</FormHelperText>
-                <button className="btn btn-sched-email" onClick={() => completeSchedule()} type="submit">
+                <button className="btn btn-sched-email" onClick={() => completeSchedule(email)} type="submit">
                   Schedule Email!
                 </button>
                 <input name="name" id="name" className="hidden" defaultValue={name}/>

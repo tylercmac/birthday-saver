@@ -37,7 +37,7 @@ h1 {
 
 .container {
   width: 100%;
-  max-width: 960px;
+  max-width: 1200px;
   margin: auto;
   padding: 0 30px;
 }
@@ -55,6 +55,14 @@ h1 {
   background-color: #f4f4f4;
   padding: 10px 30px;
   text-transform: uppercase;
+}
+
+label {
+  color: #fff !important;
+}
+
+.MuiInput-root.search {
+  border-bottom: 2px solid #fff !important;
 }
 
 .navbar ul {
@@ -143,7 +151,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .page-text {

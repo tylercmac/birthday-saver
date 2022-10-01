@@ -1,4 +1,4 @@
-import { MouseEvent, useState, ChangeEvent } from "react";
+import { MouseEvent, useState, ChangeEvent, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -27,9 +27,12 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
   const [bdays, setBdays] = useState(newData);
   const { data } = useLoaderData();
 
+  useEffect(() => {
+    setBdays(sortAndSlice(newData))
+  }, [newData])
+
   const tableStyles = () => {
     return {
-      // minWidth: 650,
       height: "1rem",
       fontFamily: "Poppins, sans-serif",
     };
@@ -66,6 +69,22 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
     return cssObj;
   };
 
+  const sortAndSlice = (bdays: Birthday[]) => {
+    return addTableProps(bdays)
+      .sort((a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil)
+      .slice((page * pageSize), (page * pageSize) +10);
+  }
+
+  const addTableProps = (bdays: Birthday[]) => {
+    console.log({ bdays });
+    
+    return bdays.map((bday: Birthday) => {
+      bday.daysUntil = calcDaysFromToday(bday.date);
+      bday.date = dayjs(bday.date).format("M/D/YY");
+      bday.age = dayjs().diff(bday.date, "years");
+      return bday})
+  }
+
   const calcDaysFromToday = (date: string) => {
     const today = dayjs().format("YYYY-MM-DD");
     const years = dayjs().diff(date, "years");
@@ -75,20 +94,6 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
     return daysUntilBirthday;
   };
 
-  const addTableProps = () => {
-    return bdays.map((bday: Birthday) => {
-      bday.daysUntil = calcDaysFromToday(bday.date);
-      bday.date = dayjs(bday.date).format("M/D/YY");
-      bday.age = dayjs().diff(bday.date, "years");
-      return bday})
-  }
-
-  const sortAndSlice = 
-    addTableProps()
-      .sort((a: Birthday, b: Birthday) => a.daysUntil - b.daysUntil)
-      .slice((page * pageSize), (page * pageSize) +10);
-
-  const bdayArr = sortAndSlice;
 
   return (
     <>
@@ -104,7 +109,7 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bdayArr.map((row: any) => (
+            {bdays.map((row: any) => (
               <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
                 <TableCell className="form">
                   <button onClick={() => {

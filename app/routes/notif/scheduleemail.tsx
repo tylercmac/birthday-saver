@@ -1,4 +1,4 @@
-import { redirect } from "remix";
+import { redirect, json } from "remix";
 const gmailPass = process.env.GMAIL_PASS;
 import nodemailer from 'nodemailer';
 import schedule from "node-schedule";
@@ -26,7 +26,6 @@ export const action = async ({ request } : { request: any }) => {
   const name = form.get('name');
   const daysBefore = form.get('days-before');
   const bday = form.get('bday')
-  // TODO: validate email input:
   const email = form.get('email')
 
   // Configure date for email cron job
@@ -57,4 +56,3 @@ export const action = async ({ request } : { request: any }) => {
   })
   return redirect("/");
 };
-

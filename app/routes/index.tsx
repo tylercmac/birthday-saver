@@ -4,7 +4,8 @@ import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import BirthdayGrid from "../components/BirthdayGrid";
-import AutocompleteBday from "../components/AutocompleteBday";
+import { useEffect } from "react";
+import { TextField } from "@mui/material";
 
 type Birthday = {
   id: number;
@@ -39,26 +40,34 @@ export default function Home() {
   const [filteredData, setFilteredData] = useState<Birthday[]>(
     data ? data.bdays : ""
   );
+  const [input, setInput] = useState<string>('')
 
-  const manageBdays = (input: string) => {
+  useEffect(() => {
     setFilteredData(
       data.bdays.filter((bday: Birthday) => {
         return bday.name.toLowerCase().startsWith(input.toLowerCase());
       })
-    );
-  };
+      );
+      console.log({ filteredData });
+    }, [input])
+    
 
   return (
     <>
       <div className={user ? "page-header between" : "page-header center"}>
         {user ? (
-          <>
-            <AutocompleteBday
-              bdays={data.bdays}
-              filteredData={filteredData}
-              manageBdays={manageBdays}
-            />
-          </>
+          <TextField
+          onChange={(event: any) => {
+            setInput(event.target.value)
+          }}
+          label="Search Names"
+          variant="standard"
+          sx={{ minWidth: '250px' }}
+          InputProps={{
+              className: "search", 
+              type: 'search'
+            }}
+          />
         ) : (
           ""
         )}

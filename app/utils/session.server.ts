@@ -95,6 +95,7 @@ export const getUser = async (request: Request) => {
     return user
   } catch (error) {
     // return redirect('/auth/login')
+    console.log(error);
     return null
   }
 }
