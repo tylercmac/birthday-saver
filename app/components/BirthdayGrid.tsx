@@ -105,9 +105,9 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell sx={{ width: '250px' }} className="desktop-col">Name</TableCell>
+              <TableCell sx={{ width: '250px' }}>Name</TableCell>
               <TableCell align="left">Notes</TableCell>
-              <TableCell sx={{ width: '100px' }} align="right">Birthday</TableCell>
+              <TableCell sx={{ width: '100px' }} className="desktop-col" align="right">Birthday</TableCell>
               <TableCell sx={{ width: '110px' }} className="desktop-col" align="right">Current Age</TableCell>
               <TableCell sx={{ width: '150px', minWidth: '66px' }} align="right">Days Until</TableCell>
             </TableRow>
