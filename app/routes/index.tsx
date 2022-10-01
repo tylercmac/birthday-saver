@@ -1,4 +1,4 @@
-import { useLoaderData, useActionData, redirect, useFetcher } from "remix";
+import { useLoaderData } from "remix";
 import { useState } from "react";
 import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
@@ -25,7 +25,6 @@ export let loader: LoaderFunction = async ({ request }) => {
         where: {
           userid: user.id,
         },
-        take: 20,
         select: { id: true, name: true, date: true, stokelevel: true, notes: true },
         orderBy: { date: "desc" },
       }),
