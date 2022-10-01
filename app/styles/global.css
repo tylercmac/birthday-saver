@@ -384,13 +384,13 @@ label {
   body {
     padding: .5rem 1rem;
   }
+  .page-header {
+    justify-content: center !important;
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 335px) {
-  .page-header {
-    justify-content: center;
-    margin-bottom: 0;
-  }
 
   body {
     padding: 0.5rem;

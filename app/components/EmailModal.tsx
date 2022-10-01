@@ -70,7 +70,7 @@ export function EmailModal({ name, bday, daysUntil } : { name: string, bday: str
 
   return (
     <div className="email-modal">
-      <Button onClick={handleOpen}><AddAlertIcon color="success"/></Button>
+      <Button sx={{ minWidth: '30px' }} onClick={handleOpen}><AddAlertIcon color="success"/></Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

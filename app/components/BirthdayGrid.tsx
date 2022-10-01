@@ -109,7 +109,7 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
               <TableCell align="left">Notes</TableCell>
               <TableCell sx={{ width: '100px' }} align="right">Birthday</TableCell>
               <TableCell sx={{ width: '110px' }} className="desktop-col" align="right">Current Age</TableCell>
-              <TableCell sx={{ width: '150px' }} align="right">Days Until</TableCell>
+              <TableCell sx={{ width: '150px', minWidth: '66px' }} align="right">Days Until</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -133,9 +133,9 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
                 </TableCell>
                 <TableCell sx={{ color: '#0086c3'}}>{row.name}</TableCell>
                 <TableCell className='desktop-col' align="left">{row.notes || <NotesModal name={row.name} bdayId={row.id} />}</TableCell>
-                <TableCell sx={{ fontStyle: 'bold' }} align="right">{row.date}</TableCell>
+                <TableCell sx={{ fontWeight: 600 }} align="right">{row.date}</TableCell>
                 <TableCell className="desktop-col" align="right">{row.age}</TableCell>
-                <TableCell className="column-daysuntil" align="right"><EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/>{row.daysUntil}</TableCell>
+                <TableCell sx={{ color: '#0086c3' }} className="column-daysuntil" align="right">{row.daysUntil}<EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/></TableCell>
               </TableRow>
             ))}
           </TableBody>
