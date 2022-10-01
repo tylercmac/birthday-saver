@@ -9,8 +9,13 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import dayjs from "dayjs";
 import { confirmDialog, ConfirmDialog } from './ConfirmDialog';
-import { redirect, useLoaderData } from "remix";
+import { Form, useLoaderData } from "remix";
 import { EmailModal } from "./EmailModal";
+import { NotesModal } from "./NotesModal";
+
+type BdayGridProps = {
+  newBdays: Birthday[],
+}
 
 type Birthday = {
   id: number;
@@ -21,15 +26,15 @@ type Birthday = {
   daysUntil: number;
 };
 
-export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
+export default function BirthdayGrid({newBdays}: BdayGridProps) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [bdays, setBdays] = useState(newData);
+  const [bdays, setBdays] = useState(newBdays);
   const { data } = useLoaderData();
 
   useEffect(() => {
-    setBdays(sortAndSlice(newData))
-  }, [newData])
+    setBdays(sortAndSlice(newBdays))
+  }, [newBdays, page])
 
   const tableStyles = () => {
     return {
@@ -76,8 +81,6 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
   }
 
   const addTableProps = (bdays: Birthday[]) => {
-    console.log({ bdays });
-    
     return bdays.map((bday: Birthday) => {
       bday.daysUntil = calcDaysFromToday(bday.date);
       bday.date = dayjs(bday.date).format("M/D/YY");
@@ -102,34 +105,36 @@ export default function BirthdayGrid({newData}: {newData: Birthday[]}) {
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Birthday</TableCell>
-              <TableCell className="stoke-col" align="right">Current Age</TableCell>
-              <TableCell align="right">Days Until</TableCell>
+              <TableCell sx={{ width: '250px' }} className="desktop-col">Name</TableCell>
+              <TableCell align="left">Notes</TableCell>
+              <TableCell sx={{ width: '100px' }} align="right">Birthday</TableCell>
+              <TableCell sx={{ width: '110px' }} className="desktop-col" align="right">Current Age</TableCell>
+              <TableCell sx={{ width: '150px' }} align="right">Days Until</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {bdays.map((row: any) => (
               <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
                 <TableCell className="form">
-                  <button onClick={() => {
-                    confirmDialog('Are you sure you want to delete this birthday?', 
-                    async () => {
-                      await fetch(`/remove/${row.id}`)
-                      window.location.reload();
-                    })         
-                  }}
-                    className="btn btn-delete"
-                  >
-                    <i className="fa fa-trash" aria-hidden="true"></i>
-                  </button>
-                <ConfirmDialog />
+                    <Form 
+                      method="post" 
+                      action={`/remove/${row.id}`}
+                      onSubmit={(event) => {
+                        if (!confirm("Are you sure?")) {
+                          event.preventDefault();
+                        }
+                      }}
+                      >
+                      <button type="submit" className="btn btn-delete" >
+                        <i className="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                  </Form>
+                  <ConfirmDialog />
                 </TableCell>
-                <TableCell>
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell className="stoke-col" align="right">{row.age}</TableCell>
+                <TableCell sx={{ color: '#0086c3'}}>{row.name}</TableCell>
+                <TableCell className='desktop-col' align="left">{row.notes || <NotesModal name={row.name} bdayId={row.id} />}</TableCell>
+                <TableCell sx={{ fontStyle: 'bold' }} align="right">{row.date}</TableCell>
+                <TableCell className="desktop-col" align="right">{row.age}</TableCell>
                 <TableCell className="column-daysuntil" align="right"><EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/>{row.daysUntil}</TableCell>
               </TableRow>
             ))}

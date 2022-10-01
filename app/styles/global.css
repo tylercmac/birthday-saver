@@ -362,7 +362,7 @@ label {
 }
 
 @media (max-width: 600px) {
-  .stoke-col {
+  .desktop-col {
     display: none !important;
   }
   .form {

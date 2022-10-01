@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
@@ -20,6 +21,7 @@ model Birthday {
   id          String    @id(map: "birthday_pk") @unique(map: "birthday_id_idx") @default(uuid()) @db.Uuid
   name        String    @db.VarChar
   date        String    @db.VarChar
+  notes       String    @db.VarChar  
   stokelevel  Int
   createddate DateTime  @default(now()) @db.Timestamp(6)
   updateddate DateTime? @db.Timestamp(6)

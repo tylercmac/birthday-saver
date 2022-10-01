@@ -76,7 +76,6 @@ export const Layout = ({ children }: { children: any }) => {
   }
   const location = useLocation();
   const isLogin = location.pathname === '/auth/login'
-  
 
   return (
     <>

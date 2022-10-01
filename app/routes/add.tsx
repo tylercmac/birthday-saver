@@ -47,7 +47,7 @@ export const action = async ({ request }: { request: any }) => {
   }
   if (user) {
     const bday = await db.birthday.create({
-      data: { ...fields, userid: user.id },
+      data: { ...fields, notes: '', userid: user.id },
     });
     if (!bday) {
       throw new Error("Unable to create birthday");

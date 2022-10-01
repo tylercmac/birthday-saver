@@ -1,4 +1,4 @@
-import { useLoaderData, useActionData, redirect } from "remix";
+import { useLoaderData, useActionData, redirect, useFetcher } from "remix";
 import { useState } from "react";
 import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
@@ -26,7 +26,7 @@ export let loader: LoaderFunction = async ({ request }) => {
           userid: user.id,
         },
         take: 20,
-        select: { id: true, name: true, date: true, stokelevel: true },
+        select: { id: true, name: true, date: true, stokelevel: true, notes: true },
         orderBy: { date: "desc" },
       }),
     };
@@ -37,20 +37,26 @@ export let loader: LoaderFunction = async ({ request }) => {
 
 export default function Home() {
   const { data, user } = useLoaderData();
-  const [filteredData, setFilteredData] = useState<Birthday[]>(
-    data ? data.bdays : ""
-  );
+  const [filteredData, setFilteredData] = useState<Birthday[]>(data?.bdays || '')
   const [input, setInput] = useState<string>('')
-
+  
   useEffect(() => {
+    data?.bdays &&
     setFilteredData(
-      data.bdays.filter((bday: Birthday) => {
+      data?.bdays.filter((bday: Birthday) => {
         return bday.name.toLowerCase().startsWith(input.toLowerCase());
       })
       );
-      console.log({ filteredData });
     }, [input])
-    
+
+  useEffect(() => {
+    data?.bdays &&
+    setFilteredData(
+      data?.bdays.filter((bday: Birthday) => {
+        return bday.name.toLowerCase().startsWith(input.toLowerCase());
+      })
+      );
+    }, [data])
 
   return (
     <>
@@ -62,7 +68,7 @@ export default function Home() {
           }}
           label="Search Names"
           variant="standard"
-          sx={{ minWidth: '250px' }}
+          sx={{ maxWidth: '250px' }}
           InputProps={{
               className: "search", 
               type: 'search'
@@ -87,7 +93,7 @@ export default function Home() {
           </>
         )}
       </div>
-      {data ? <BirthdayGrid newData={filteredData} /> : null}
+      {data ? <BirthdayGrid newBdays={filteredData} /> : null}
     </>
   );
 }
