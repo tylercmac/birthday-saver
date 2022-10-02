@@ -12,7 +12,9 @@ import {
 import globalStylesUrl from "~/styles/global.css";
 import { getUser } from "./utils/session.server";
 
-export const links = () => [{ rel: "stylesheet", href: globalStylesUrl }];
+export const links = () => [
+  { rel: "stylesheet", href: globalStylesUrl },
+];
 
 export const meta = () => {
   const description = "A cool app for remembering bdays";
@@ -78,23 +80,23 @@ export const Layout = ({ children }: { children: any }) => {
   const isLogin = location.pathname === '/auth/login'
 
   return (
-    <>
-      <nav className="navBar">
-        {data?.user?.username ? (
-          <form action="/auth/logout" method="POST">
-            <button className="btn btn-reverse" type="submit">
-              Logout {data.user.username}
-            </button>
-          </form>
-        ) : (
-          <a href="/auth/login" className={isLogin ? "hidden" : "btn btn-reverse"}>
-            Login
-          </a>
-        )}
-      </nav>
-      <h1 className="main-title">{data?.user?.username ? `${data.user.username}'s` : ''} Birthday Saver</h1>
+    <div>
+        <nav className="navbar">
+          {data?.user?.username ? (
+            <form action="/auth/logout" method="POST">
+              <button className="btn btn-cmn btn-reverse" type="submit">
+                LOGOUT
+              </button>
+            </form>
+          ) : (
+            <a href="/auth/login" className={isLogin ? "hidden" : "btn-reverse"}>
+              LOGIN
+            </a>
+          )}
+        </nav>
+        <h1 className="main-title">{data?.user?.username ? `${data.user.username}'s` : ''} Birthday Saver</h1>
       <div className="container">{children}</div>
-    </>
+    </div>
   );
 };
 

@@ -10,9 +10,8 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { getUser } from '~/utils/session.server';
-import { db } from '~/utils/db.server';
-import { useEffect } from 'react';
+import EditIcon from '@mui/icons-material/Edit';
+import { useStyles } from '../styles/grid'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -33,7 +32,7 @@ const style = {
   p: 4,
 };
 
-export function NotesModal({ name, bdayId } : { name: string, bdayId: string }) {
+export function NotesModal({ name, bdayId, currNote } : { name: string, bdayId: string, currNote: string }) {
   const [open, setOpen] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [note, setNote] = React.useState('');
@@ -41,6 +40,7 @@ export function NotesModal({ name, bdayId } : { name: string, bdayId: string }) 
   const handleCloseSnack = () => setOpenSnackbar(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const classes = useStyles()
 
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNote(event.target.value);
@@ -57,7 +57,17 @@ export function NotesModal({ name, bdayId } : { name: string, bdayId: string }) 
 
   return (
     <div className="email-modal">
-      <Button onClick={handleOpen}><NoteAddIcon color="success"/></Button>
+      {
+        currNote.length ? 
+        <div className="notes-col">
+          <div className={classes.notesBtn} onClick={handleOpen}>
+            <EditIcon sx={{color: 'black'}}/>
+          </div>
+          <div className='notes-txt'>{currNote}</div>
+        </div>
+        :
+        <Button onClick={handleOpen}><NoteAddIcon color="success"/></Button>
+      }
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -71,7 +81,14 @@ export function NotesModal({ name, bdayId } : { name: string, bdayId: string }) 
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            {
+              currNote.length ? 
+              <>
+                <h2>Note editing coming soon!</h2>
+              </>
+              :
+              <>
+              <Typography id="transition-modal-title" variant="h6" component="h2">
               Add a note for {name}'s bday!
             </Typography>
               <Form className="email-fields" method="post" action="/notes/add" reloadDocument={false}>
@@ -79,8 +96,10 @@ export function NotesModal({ name, bdayId } : { name: string, bdayId: string }) 
                 <button className="btn btn-sched-email" onClick={() => completeSchedule(note)} type="submit">
                   Add note!!
                 </button>
-                <input name="bdayId" id="bdayId" defaultValue={bdayId}/>
+                <input name="bdayId" id="bdayId" className='hidden' defaultValue={bdayId}/>
               </Form>
+              </>
+              }
           </Box>
         </Fade>
       </Modal>

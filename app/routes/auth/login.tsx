@@ -102,10 +102,6 @@ export default function Login() {
 
   return (
     <div className="auth-container">
-      <div className="page-header">
-        <h1>Login</h1>
-      </div>
-
       <div className="page-content">
         <form method="POST">
           <fieldset>

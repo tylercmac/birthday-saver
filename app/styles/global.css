@@ -8,9 +8,8 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  padding: 3rem;
   /* background-color: #ececec; */
-  background-color: #474747;
+  background-color: #002b4c9c;
   /* background-image: url("../../public/partyimg.jpg"); */
 }
 
@@ -35,11 +34,37 @@ h1 {
   margin: 2rem 0 2rem 0;
 }
 
+.login-cont {
+  padding: 3rem;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;
   margin: auto;
   padding: 0 30px;
+}
+
+.auth-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 3rem;
+}
+
+.notes-col {
+  max-width: 300px;
+  min-width: 125px;
+  padding: 0 !important;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: left !important;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.notes-txt {
+  padding-right: 10px;
 }
 
 .logo {
@@ -51,9 +76,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  background-color: #f4f4f4;
-  padding: 10px 30px;
+  padding: 30px;
   text-transform: uppercase;
 }
 
@@ -89,7 +112,7 @@ label {
 
 .btn {
   display: inline-block;
-  background: #000;
+  background: #002b4c;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -101,10 +124,12 @@ label {
   font-family: inherit;
 }
 
+.add-bday-btn {
+  padding: 6px 10px;
+}
+
 .btn-reverse {
-  background: #f9f9f9;
-  color: #000;
-  border-color: #000;
+  color: #fff;
 }
 
 .btn:focus {
@@ -127,10 +152,6 @@ label {
   font-size: 13px;
   padding: 5px;
   margin: 0;
-}
-
-.form {
-  width: 1rem;
 }
 
 .main-title {
@@ -293,11 +314,6 @@ label {
   margin-bottom: 1rem !important;
 }
 
-.auth-container {
-  max-width: 600px;
-  margin: auto;
-}
-
 .auth-container h1 {
   text-align: center;
 }
@@ -345,6 +361,10 @@ label {
   color: white !important;
 }
 
+.grid-body {
+  padding-top: .5rem;
+}
+
 @media (max-width: 1000px) {
   .form-control {
     padding: 0;
@@ -359,12 +379,21 @@ label {
   .container {
     padding: 0;
   }
+  /* .grid-body {
+    padding: .5rem 0;
+  } */
+  .MuiTableContainer-root {
+    border-radius: 0 !important;
+  }
+  .navbar {
+    padding-top: 15px;
+  }
+  .notes-col {
+    max-width: 125px;
+  }
 }
 
 @media (max-width: 600px) {
-  .desktop-col {
-    display: none !important;
-  }
   .form {
     padding: 4px !important;
   }
@@ -381,28 +410,38 @@ label {
 }
 
 @media (max-width: 425px) {
-  body {
-    padding: .5rem 1rem;
-  }
   .page-header {
     justify-content: center !important;
     margin-bottom: 0;
+  }
+  .btn-cmn {
+    position: fixed;
+    top: 7px;
+    font-size: 10px;
+    padding: 8px 10px;
+  }
+  .add-bday-btn {
+    right: 7px;
+    padding-bottom: 4px;
+  }
+  .bday-icon {
+    font-size: 1rem !important; 
+  }
+  .btn-reverse {
+    left: 7px;
+  }
+  .main-title {
+    margin: 0;
+    font-size: 36px;
   }
 }
 
 @media (max-width: 335px) {
 
-  body {
-    padding: 0.5rem;
-  }
-
-  .main-title {
+  /* .main-title {
     margin-bottom: 1rem;
-  }
+  } */
 
-  .btn-reverse {
-    padding: 8px;
-  }
 
   .css-dsuxgy-MuiTableCell-root {
     padding: 6px 4px !important;

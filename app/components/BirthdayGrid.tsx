@@ -8,10 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import dayjs from "dayjs";
-import { confirmDialog, ConfirmDialog } from './ConfirmDialog';
 import { Form, useLoaderData } from "remix";
 import { EmailModal } from "./EmailModal";
 import { NotesModal } from "./NotesModal";
+import { useStyles } from "../styles/grid";
 
 type BdayGridProps = {
   newBdays: Birthday[],
@@ -31,6 +31,7 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
   const [pageSize, setPageSize] = useState(10);
   const [bdays, setBdays] = useState(newBdays);
   const { data } = useLoaderData();
+  const classes = useStyles()
 
   useEffect(() => {
     setBdays(sortAndSlice(newBdays))
@@ -62,10 +63,8 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
   const styleRow = (daysUntil: number) => {
     let cssObj = { 
       background: "#FFFF",  
-      // backgroundImage: "",
       height: "1rem"
     }
-    // if (daysUntil === 0) cssObj.backgroundImage = `url("partyimg.jpg"`;
     if (daysUntil === 0) cssObj.background = "#00BFFF";
     else if (daysUntil === 1) cssObj.background = "#B22222";
     else if (daysUntil <= 5) cssObj.background = "#E9967A";
@@ -99,23 +98,48 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
 
 
   return (
-    <>
+    <div className='grid-body'>
       <TableContainer component={Paper}>
-        <Table sx={tableStyles()} aria-label="simple table" size="small">
+        <Table className={classes.mainGrid} aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
               <TableCell></TableCell>
-              <TableCell sx={{ width: '250px' }}>Name</TableCell>
-              <TableCell align="left" className="desktop-col">Notes</TableCell>
-              <TableCell sx={{ width: '100px' }} align="right">Birthday</TableCell>
-              <TableCell sx={{ width: '110px' }} className="desktop-col" align="right">Current Age</TableCell>
-              <TableCell sx={{ width: '150px', minWidth: '66px' }} align="right">Days Until</TableCell>
+              <TableCell 
+                className={`${classes.sticky} ${classes.white}`}
+                >
+                  Name
+              </TableCell>
+              <TableCell 
+                align="right"
+                >
+                Birthday
+              </TableCell>
+              <TableCell 
+                sx={{ minWidth: '98px' }} 
+                align="right"
+                >
+                Days Until
+              </TableCell>
+              <TableCell 
+                className="desktop-col" 
+                align="center"
+                >
+                Current Age
+              </TableCell>
+              <TableCell 
+                align="left" 
+                className="desktop-col"
+                >
+                Notes
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {bdays.map((row: any) => (
-              <TableRow key={row.id} sx={styleRow(row.daysUntil)}>
-                <TableCell className="form">
+            {bdays.map((row: any) => {
+              const bckgrdColor = styleRow(row.daysUntil)
+              return (
+                <TableRow key={row.id} sx={bckgrdColor}>
+                  <TableCell className="form">
                     <Form 
                       method="post" 
                       action={`/remove/${row.id}`}
@@ -126,18 +150,52 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
                       }}
                       >
                       <button type="submit" className="btn btn-delete" >
-                        <i className="fa fa-trash" aria-hidden="true"></i>
+                      <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
-                  </Form>
-                  <ConfirmDialog />
-                </TableCell>
-                <TableCell sx={{ color: '#0086c3'}}>{row.name}</TableCell>
-                <TableCell className='desktop-col' align="left">{row.notes || <NotesModal name={row.name} bdayId={row.id} />}</TableCell>
-                <TableCell sx={{ fontWeight: 600 }} align="right">{row.date}</TableCell>
-                <TableCell className="desktop-col" align="right">{row.age}</TableCell>
-                <TableCell sx={{ color: '#0086c3' }} className="column-daysuntil" align="right">{row.daysUntil}<EmailModal name={row.name} bday={row.date} daysUntil={row.daysUntil}/></TableCell>
-              </TableRow>
-            ))}
+                    </Form>
+                  {/* <ConfirmDialog /> */}
+                  </TableCell>
+                  <TableCell 
+                    className={`${classes.sticky} ${classes.gridBlue}`}
+                    sx={bckgrdColor}
+                  >
+                    {row.name}
+                  </TableCell>
+                  <TableCell 
+                    sx={{ fontWeight: 600 }} 
+                    align="right"
+                  >
+                    {row.date}
+                  </TableCell>
+                  <TableCell 
+                    sx={{ color: '#0086c3' }} 
+                    className="column-daysuntil" 
+                    align="right"
+                  >
+                    {row.daysUntil}
+                    <EmailModal 
+                      name={row.name} 
+                      bday={row.date} 
+                      daysUntil={row.daysUntil}
+                    />
+                    </TableCell>
+                  <TableCell 
+                    className="desktop-col" 
+                    align="center"
+                    sx={{ minWidth: '109px' }}
+                    >
+                      {row.age}
+                  </TableCell>
+                  <TableCell 
+                    scope='row' 
+                    className={`notes-col desktop-col ${classes.notes}`} 
+                    align="left"
+                    >
+                    <NotesModal currNote={row.notes} name={row.name} bdayId={row.id} />
+                  </TableCell>
+                </TableRow>
+                  )}
+                )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -150,6 +208,6 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={(event) => handleChangePageSize(event)}
       />
-    </>
+    </div>
   );
 }

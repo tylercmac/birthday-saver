@@ -4,6 +4,8 @@ import type { LoaderFunction } from "remix";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
 import BirthdayGrid from "../components/BirthdayGrid";
+import CakeIcon from '@mui/icons-material/Cake';
+import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from "react";
 import { TextField } from "@mui/material";
 
@@ -67,7 +69,7 @@ export default function Home() {
           }}
           label="Search Names"
           variant="standard"
-          sx={{ maxWidth: '250px' }}
+          sx={{ maxWidth: '250px', marginLeft: '10px' }}
           InputProps={{
               className: "search", 
               type: 'search'
@@ -78,7 +80,7 @@ export default function Home() {
         )}
         {user ? (
             <a href="/add">
-              <button className="btn">Add Birthday!</button>
+              <button className="btn btn-cmn add-bday-btn"><AddIcon className="bday-icon"/><CakeIcon className="bday-icon"/></button>
             </a>
         ) : (
           <>
@@ -87,7 +89,7 @@ export default function Home() {
                 <em>Login to Add Birthdays!</em>
               </div>
               <br />
-              <button className="btn">Add Birthday!</button>
+              <button style={{ marginLeft: '20px' }} className="btn btn-">Add Birthday!</button>
             </a>
           </>
         )}
