@@ -67,6 +67,14 @@ h1 {
   padding-right: 10px;
 }
 
+.MuiTableCell-root {
+  font-family: inherit !important;
+}
+
+.MuiFormLabel-root {
+  font-family: inherit !important;
+}
+
 .logo {
   font-size: x-large;
   text-transform: uppercase;
@@ -410,6 +418,9 @@ label {
 }
 
 @media (max-width: 425px) {
+  .navbar {
+    padding: 0;
+  }
   .page-header {
     justify-content: center !important;
     margin-bottom: 0;
@@ -431,17 +442,15 @@ label {
     left: 7px;
   }
   .main-title {
-    margin: 0;
-    font-size: 36px;
+    margin: 0 72px;
+    font-size: 19px;
+  }
+  .MuiInput-root.search {
+    margin-top: ""     
   }
 }
 
 @media (max-width: 335px) {
-
-  /* .main-title {
-    margin-bottom: 1rem;
-  } */
-
 
   .css-dsuxgy-MuiTableCell-root {
     padding: 6px 4px !important;

@@ -115,12 +115,13 @@ export default function BirthdayGrid({newBdays}: BdayGridProps) {
                 Birthday
               </TableCell>
               <TableCell 
-                sx={{ minWidth: '98px' }} 
+                sx={{ minWidth: '103px' }} 
                 align="right"
                 >
                 Days Until
               </TableCell>
               <TableCell 
+                sx={{ minWidth: '118px' }} 
                 className="desktop-col" 
                 align="center"
                 >

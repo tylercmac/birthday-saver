@@ -48,16 +48,7 @@ export default function Home() {
         return bday.name.toLowerCase().startsWith(input.toLowerCase());
       })
       );
-    }, [input])
-
-  useEffect(() => {
-    data?.bdays &&
-    setFilteredData(
-      data?.bdays.filter((bday: Birthday) => {
-        return bday.name.toLowerCase().startsWith(input.toLowerCase());
-      })
-      );
-    }, [data])
+    }, [input, data])
 
   return (
     <>
