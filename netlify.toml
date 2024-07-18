@@ -12,8 +12,8 @@
   status = 200
 
 # Comment out for local dev
-[functions]
-  node_bundler = "esbuild"
+# [functions]
+#   node_bundler = "esbuild"
 
 [[headers]]
   for = "/build/*"

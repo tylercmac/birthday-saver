@@ -17,7 +17,7 @@ async function seed() {
   const bdays = await generateRand()
   await Promise.all(
     bdays.map((bday) => {
-      const data = { userid: 'e887d936-91cc-4a67-8cb9-c778f462ea5b', ...bday };
+      const data = { userid: '82d492f0-f88a-40db-8e04-93efab60f43c', ...bday };
       return prisma.birthday.create({ data });
     })
   );

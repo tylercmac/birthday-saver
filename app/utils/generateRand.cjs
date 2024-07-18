@@ -3,7 +3,7 @@ const fetch = require('node-fetch')
 const generateRand = async () => {
   const bdays = []
   for (let i = 0; i <= 20; i++ ) {
-    let randPerson = await fetch('https://api.namefake.com/random/random')
+    let randPerson = await fetch('https://api.namefake.com')
     randPerson = await randPerson.json()
     
     bdays.push(
@@ -15,7 +15,7 @@ const generateRand = async () => {
       }
     )
   }
-
+  console.log({ bdays })
   return bdays
 }
 
